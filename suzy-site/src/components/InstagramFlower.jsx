@@ -1,33 +1,26 @@
 import { useState, useEffect } from 'react'
 import FlowerSVG from '../assets/flower.svg?react'
 
+// Import Instagram images
+import ig1 from '../assets/7D20BD51-5942-4380-BC65-B4E405F529B3.jpeg'
+import ig2 from '../assets/9E1EA210-114D-4BF3-9433-2579AC9152B9.jpeg'
+import ig3 from '../assets/B6DB96E9-9289-4170-8993-F1E4793C1896.jpeg'
+import ig4 from '../assets/B8800814-6683-48EE-AFA1-A99560A667C7.jpeg'
+import ig5 from '../assets/C8B58FB1-F90C-443F-9A76-8189DBE81698.jpeg'
+
 function InstagramFlower({ instagramUrl }) {
   const [isPanelOpen, setIsPanelOpen] = useState(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  // Sample Instagram images - replace with real data from Sanity later
-  const instagramImages = [
-    'https://picsum.photos/seed/ig1/400/400',
-    'https://picsum.photos/seed/ig2/400/400',
-    'https://picsum.photos/seed/ig3/400/400',
-    'https://picsum.photos/seed/ig4/400/400',
-  ]
+  // Real Instagram images
+  const instagramImages = [ig1, ig2, ig3, ig4, ig5]
 
-  // Cycle through images every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % instagramImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [instagramImages.length])
-
-  // Floating flower positions - more spread out and varied movement
+  // Floating flower positions - each gets a random image
   const flowers = [
-    { top: '10%', left: '65%', delay: 0, duration: 18, size: 'w-16 h-16' },
-    { top: '25%', left: '85%', delay: 3, duration: 22, size: 'w-20 h-20' },
-    { top: '40%', left: '72%', delay: 7, duration: 20, size: 'w-14 h-14' },
-    { top: '55%', left: '80%', delay: 2, duration: 25, size: 'w-18 h-18' },
-    { top: '15%', left: '90%', delay: 5, duration: 19, size: 'w-12 h-12' },
+    { top: '10%', left: '65%', delay: 0, duration: 18, size: 'w-16 h-16', imageIndex: 0 },
+    { top: '25%', left: '85%', delay: 3, duration: 22, size: 'w-20 h-20', imageIndex: 1 },
+    { top: '40%', left: '72%', delay: 7, duration: 20, size: 'w-14 h-14', imageIndex: 2 },
+    { top: '55%', left: '80%', delay: 2, duration: 25, size: 'w-18 h-18', imageIndex: 3 },
+    { top: '15%', left: '90%', delay: 5, duration: 19, size: 'w-12 h-12', imageIndex: 4 },
   ]
 
   return (
@@ -123,17 +116,23 @@ function InstagramFlower({ instagramUrl }) {
                 </button>
               </div>
 
-              {/* Instagram grid */}
+              {/* Instagram grid - all 5 images */}
               <div className="grid grid-cols-2 gap-4 mb-8">
                 {instagramImages.map((img, idx) => (
-                  <div key={idx} className="aspect-square overflow-hidden bg-light-lavender relative group">
+                  <a
+                    key={idx}
+                    href={instagramUrl || 'https://www.instagram.com/maybespecial/'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`aspect-square overflow-hidden bg-light-lavender relative group block ${idx === 4 ? 'col-span-2' : ''}`}
+                  >
                     <img 
                       src={img} 
                       alt={`Instagram post ${idx + 1}`} 
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-lavender/0 group-hover:bg-lavender/20 transition-colors" />
-                  </div>
+                  </a>
                 ))}
               </div>
               

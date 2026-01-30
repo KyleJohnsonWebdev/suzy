@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-white text-warm-black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer utilities {
+  .prose-custom {
+    @apply leading-relaxed;
+  }
+  
+  .prose-custom p {
+    @apply mb-4;
+  }
+  
+  .prose-custom h1,
+  .prose-custom h2,
+  .prose-custom h3 {
+    @apply font-normal mb-3 mt-6;
+  }
+  
+  .prose-custom a {
+    @apply text-lavender hover:text-warm-black underline transition-colors;
+  }
+}

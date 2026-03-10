@@ -143,12 +143,6 @@ function Contact() {
           </p>
         )}
       </form>
-
-      {settings?.contactEmail && (
-        <p className="text-sm text-warm-black/60 mt-8">
-          Or email directly: <a href={`mailto:${settings.contactEmail}`} className="text-lavender hover:text-warm-black underline">{settings.contactEmail}</a>
-        </p>
-      )}
     </div>
   )
 }

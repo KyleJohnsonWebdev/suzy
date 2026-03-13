@@ -7,5 +7,4 @@ export default defineConfig({
     react(),
     svgr()
   ],
-  base: '/suzy-website/',
 })

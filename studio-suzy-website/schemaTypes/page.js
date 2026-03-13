@@ -30,6 +30,23 @@ export default defineType({
       description: 'Large statement at the top of the page',
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for accessibility and SEO',
+        },
+      ],
+      description: 'Optional image displayed between the hero text and body content',
+    }),
+    defineField({
       name: 'body',
       title: 'Body Content',
       type: 'array',

@@ -15,6 +15,7 @@ function Home() {
   const [featuredEntries, setFeaturedEntries] = useState([])
   const [settings, setSettings] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +46,6 @@ function Home() {
         `)
         setFeaturedEntries(entries)
 
-        // Fetch site settings for Instagram
         const siteSettings = await client.fetch(`
           *[_type == "siteSettings"][0]{
             instagramUrl
@@ -62,6 +62,15 @@ function Home() {
     fetchData()
   }, [])
 
+  // Close lightbox on escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setLightboxOpen(false)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-6 py-20">
@@ -72,7 +81,6 @@ function Home() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 relative">
-      {/* Instagram Flower - floats behind content */}
       <InstagramFlower instagramUrl={settings?.instagramUrl} />
 
       {page?.heroText && (
@@ -83,14 +91,30 @@ function Home() {
         </div>
       )}
 
-      {/* Hero Image - between hero text and body */}
+      {/* Hero Image — square crop, half-width, clickable to expand */}
       {page?.heroImage && (
         <div className="mb-20 relative z-10">
-          <img
-            src={urlFor(page.heroImage)}
-            alt={page.heroImage.alt || ''}
-            className="w-full object-cover"
-          />
+          <button
+            onClick={() => setLightboxOpen(true)}
+            className="block w-1/2 group focus:outline-none"
+            aria-label="Expand photo"
+            style={{ cursor: 'zoom-in' }}
+          >
+            <div className="aspect-square overflow-hidden">
+              <img
+                src={urlFor(page.heroImage)}
+                alt={page.heroImage.alt || ''}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+            </div>
+            {/* Subtle expand hint on hover */}
+            <div className="mt-2 flex items-center gap-1 opacity-0 group-hover:opacity-60 transition-opacity duration-300">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+              </svg>
+              <span className="text-xs tracking-wide">expand</span>
+            </div>
+          </button>
         </div>
       )}
 
@@ -115,10 +139,8 @@ function Home() {
             {page.featuredEntriesHeading || 'Featured'}
           </h2>
           
-          {/* Broken grid layout - asymmetric sizes */}
           <div className="grid grid-cols-12 gap-6 lg:gap-8">
             {featuredEntries.map((entry, index) => {
-              // Alternate between large and small cards
               const isLarge = index % 3 === 0
               const colSpan = isLarge ? 'col-span-12 lg:col-span-8' : 'col-span-12 lg:col-span-4'
               
@@ -156,7 +178,6 @@ function Home() {
                           className="w-full h-full object-cover"
                         />
                       )}
-                      {/* Lavender tinted overlay with play button */}
                       <div className="absolute inset-0 bg-lavender/30 group-hover:bg-lavender/40 transition-colors flex items-center justify-center">
                         <div className="w-12 h-12 rounded-full bg-warm-black flex items-center justify-center group-hover:scale-110 transition-transform">
                           <svg className="w-5 h-5 text-neutral-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
@@ -182,6 +203,32 @@ function Home() {
             })}
           </div>
         </div>
+      )}
+
+      {/* Lightbox */}
+      {lightboxOpen && page?.heroImage && (
+        <>
+          <div
+            className="fixed inset-0 bg-warm-black/80 z-50 transition-opacity"
+            onClick={() => setLightboxOpen(false)}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-8 pointer-events-none">
+            <div className="relative max-w-4xl w-full pointer-events-auto">
+              <img
+                src={urlFor(page.heroImage)}
+                alt={page.heroImage.alt || ''}
+                className="w-full h-auto max-h-[85vh] object-contain"
+              />
+              <button
+                onClick={() => setLightboxOpen(false)}
+                className="absolute top-4 right-4 text-neutral-white/80 hover:text-neutral-white text-4xl leading-none focus:outline-none"
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )

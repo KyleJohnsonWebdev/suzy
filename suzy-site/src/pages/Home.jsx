@@ -23,6 +23,7 @@ function Home() {
           *[_type == "page" && slug.current == "home"][0]{
             title,
             heroText,
+            heroImage,
             body,
             showFeaturedEntries,
             featuredEntriesHeading
@@ -79,6 +80,17 @@ function Home() {
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-normal leading-[0.95] max-w-5xl">
             {page.heroText}
           </h1>
+        </div>
+      )}
+
+      {/* Hero Image - between hero text and body */}
+      {page?.heroImage && (
+        <div className="mb-20 relative z-10">
+          <img
+            src={urlFor(page.heroImage)}
+            alt={page.heroImage.alt || ''}
+            className="w-full object-cover"
+          />
         </div>
       )}
 

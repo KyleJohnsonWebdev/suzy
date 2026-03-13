@@ -12,6 +12,10 @@ jobs:
     permissions:
       contents: write
 
+    defaults:
+      run:
+        working-directory: suzy-site
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,7 +25,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: '**/package.json'
+          cache-dependency-path: 'suzy-site/package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -30,11 +34,13 @@ jobs:
         run: npm run build
 
       - name: Copy build to docs
+        working-directory: .
         run: |
           rm -rf docs
-          cp -r dist docs
+          cp -r suzy-site/dist docs
 
       - name: Commit and push docs
+        working-directory: .
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

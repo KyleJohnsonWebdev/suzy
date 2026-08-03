@@ -38,6 +38,18 @@ export default defineType({
       description: 'Full Instagram profile URL',
     }),
     defineField({
+      name: 'linkedinUrl',
+      title: 'LinkedIn URL',
+      type: 'url',
+      description: 'Full LinkedIn profile URL',
+    }),
+    defineField({
+      name: 'threadsUrl',
+      title: 'Threads URL',
+      type: 'url',
+      description: 'Full Threads profile URL',
+    }),
+    defineField({
       name: 'instagramFeedHeading',
       title: 'Instagram Feed Heading',
       type: 'string',

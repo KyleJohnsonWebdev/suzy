@@ -34,7 +34,7 @@ export const ENTRY_CARD_FIELDS = `
 
 /** All published entries, newest first */
 export const ENTRIES_QUERY = `
-  *[_type == "entry" && defined(publishedAt)]
+  *[_type == "entry" && defined(publishedAt) && defined(slug.current)]
   | order(publishedAt desc){
     ${ENTRY_FIELDS}
   }
@@ -42,7 +42,7 @@ export const ENTRIES_QUERY = `
 
 /** Featured entries for homepage, newest first */
 export const FEATURED_ENTRIES_QUERY = `
-  *[_type == "entry" && featured == true && defined(publishedAt)]
+  *[_type == "entry" && featured == true && defined(publishedAt) && defined(slug.current)]
   | order(publishedAt desc){
     ${ENTRY_CARD_FIELDS}
   }
@@ -67,13 +67,25 @@ export const HOME_PAGE_QUERY = `
   }
 `
 
+export const ABOUT_PAGE_QUERY = `
+  *[_type == "page" && slug.current == "about"][0]{
+    title,
+    heroText,
+    heroImage,
+    body
+  }
+`
+
 // ─── SETTINGS QUERIES ─────────────────────────────────────────────────────────
 
 export const SITE_SETTINGS_QUERY = `
   *[_type == "siteSettings"][0]{
     siteTitle,
     tagline,
+    instagramHandle,
     instagramUrl,
+    linkedinUrl,
+    threadsUrl,
     instagramFeedHeading,
     contactEmail,
     contactFormHeading,

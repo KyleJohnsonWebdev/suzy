@@ -5,6 +5,7 @@ import EntriesFeed from './pages/EntriesFeed'
 import EntryDetail from './pages/EntryDetail'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import { useSiteSettings } from './hooks/useSiteSettings'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -23,6 +24,7 @@ function ScrollToTop() {
  */
 function AppShell() {
   const location = useLocation()
+  const { settings } = useSiteSettings()
 
   const navLinkClass = ({ isActive }) =>
     `transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2 ${
@@ -80,14 +82,38 @@ function AppShell() {
             <p className="text-warm-black/50">
               © {new Date().getFullYear()} Maybe Special
             </p>
-            <a
-              href="https://www.instagram.com/maybespecial/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
-            >
-              Instagram
-            </a>
+            <div className="flex gap-6">
+              {settings?.instagramUrl && (
+                <a
+                  href={settings.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                >
+                  Instagram
+                </a>
+              )}
+              {settings?.linkedinUrl && (
+                <a
+                  href={settings.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                >
+                  LinkedIn
+                </a>
+              )}
+              {settings?.threadsUrl && (
+                <a
+                  href={settings.threadsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                >
+                  Threads
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </footer>

@@ -89,14 +89,36 @@ function Contact() {
 
           <div className="space-y-3 text-sm text-warm-black/50">
             <p>Response within a few days.</p>
-            <a
-              href="https://www.instagram.com/maybespecial/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block hover:text-lavender transition-colors"
-            >
-              Instagram → @maybespecial
-            </a>
+            {settings?.instagramUrl && (
+              <a
+                href={settings.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-lavender transition-colors"
+              >
+                Instagram → {settings.instagramHandle ? `@${settings.instagramHandle}` : ''}
+              </a>
+            )}
+            {settings?.linkedinUrl && (
+              <a
+                href={settings.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-lavender transition-colors"
+              >
+                LinkedIn →
+              </a>
+            )}
+            {settings?.threadsUrl && (
+              <a
+                href={settings.threadsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:text-lavender transition-colors"
+              >
+                Threads →
+              </a>
+            )}
           </div>
         </div>
 

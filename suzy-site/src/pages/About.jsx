@@ -63,6 +63,32 @@ function About() {
               </a>
             </div>
           )}
+          {siteSettings?.linkedinUrl && (
+            <div>
+              <p className="text-sm mb-1">LinkedIn</p>
+              <a
+                href={siteSettings.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lavender hover:text-warm-black transition-colors"
+              >
+                LinkedIn
+              </a>
+            </div>
+          )}
+          {siteSettings?.threadsUrl && (
+            <div>
+              <p className="text-sm mb-1">Threads</p>
+              <a
+                href={siteSettings.threadsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-lavender hover:text-warm-black transition-colors"
+              >
+                Threads
+              </a>
+            </div>
+          )}
           <div>
             <p className="text-sm mb-1">Get in touch</p>
             <Link

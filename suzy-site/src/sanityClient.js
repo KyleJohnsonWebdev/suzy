@@ -12,7 +12,10 @@ export function urlFor(source) {
   if (!source?.asset?._ref) return ''
   
   const ref = source.asset._ref
-  const [, id, dimensions, format] = ref.match(/image-([a-f\d]+)-(\d+x\d+)-(\w+)/)
-  
+  const match = ref.match(/image-([a-f\d]+)-(\d+x\d+)-(\w+)/)
+  if (!match) return ''
+
+  const [, id, dimensions, format] = match
+
   return `https://cdn.sanity.io/images/ygagsfm8/production/${id}-${dimensions}.${format}`
 }

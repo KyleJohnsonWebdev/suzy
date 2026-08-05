@@ -31,11 +31,11 @@ function About() {
       </div>
 
       {page?.heroImage && (
-        <div className="mb-20 max-w-4xl">
+        <div className="mb-20">
           <img
-            src={urlForImage(page.heroImage, { width: 1600 })}
+            src={urlForImage(page.heroImage, { width: 640 })}
             alt={page.heroImage.alt || page.title || 'About'}
-            className="w-full h-auto object-cover"
+            className="w-72 h-72 md:w-96 md:h-96 rounded-full object-cover"
           />
         </div>
       )}

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tokens": "node scripts/build-tokens.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.3",

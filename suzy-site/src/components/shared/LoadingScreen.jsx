@@ -9,7 +9,9 @@
 function LoadingScreen({ fullScreen = false }) {
   const wrapper = fullScreen
     ? 'min-h-screen flex items-center justify-center'
-    : 'max-w-6xl mx-auto px-6 py-20 flex items-center gap-3'
+    : // min-h-screen keeps the footer below the fold while content loads, so it
+      // doesn't jump (layout shift) when the page's Sanity content arrives.
+      'min-h-screen max-w-6xl mx-auto px-6 py-20 flex items-start gap-3'
 
   return (
     <div className={wrapper}>

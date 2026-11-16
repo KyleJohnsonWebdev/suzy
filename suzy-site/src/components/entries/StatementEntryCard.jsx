@@ -27,13 +27,13 @@ function StatementEntryCard({ entry }) {
         />
 
         {entry.title && (
-          <h2 className="text-3xl font-normal mb-4 group-hover:text-lavender transition-colors">
+          <h2 className="text-3xl font-normal mb-4 group-hover:text-accent transition-colors">
             {entry.title}
           </h2>
         )}
 
         {excerpt && (
-          <p className="text-lg text-warm-black/80 leading-relaxed mb-4 max-w-2xl">
+          <p className="text-lg text-body leading-relaxed mb-4 max-w-2xl">
             {excerpt}
           </p>
         )}

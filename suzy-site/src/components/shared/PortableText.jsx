@@ -13,7 +13,7 @@ function renderMark(mark, children, markDefs = []) {
     case 'underline':
       return <span className="underline">{children}</span>
     case 'code':
-      return <code className="text-sm bg-light-lavender px-1 py-0.5 rounded">{children}</code>
+      return <code className="text-sm bg-lavender px-1 py-0.5 rounded">{children}</code>
     default: {
       const def = markDefs.find((d) => d._key === mark)
       if (def?._type === 'link') {
@@ -22,7 +22,7 @@ function renderMark(mark, children, markDefs = []) {
             href={def.href}
             target={def.blank ? '_blank' : undefined}
             rel={def.blank ? 'noopener noreferrer' : undefined}
-            className="text-lavender hover:text-warm-black underline transition-colors"
+            className="text-accent hover:text-ink underline transition-colors"
           >
             {children}
           </a>
@@ -51,7 +51,7 @@ function renderBlock(block, index) {
       return <h3 key={index} className="text-2xl font-normal mt-8 mb-3">{children}</h3>
     case 'blockquote':
       return (
-        <blockquote key={index} className="border-l-2 border-lavender pl-6 my-8 text-warm-black/70 italic">
+        <blockquote key={index} className="border-l-2 border-accent pl-6 my-8 text-body italic">
           {children}
         </blockquote>
       )
@@ -86,7 +86,7 @@ export function PortableTextWithDropCap({ value }) {
   return (
     <div className="prose-custom text-xl leading-relaxed">
       {firstChildren && (
-        <p className="first-letter:text-7xl first-letter:font-normal first-letter:float-left first-letter:mr-2 first-letter:leading-none first-letter:text-lavender mb-6">
+        <p className="first-letter:text-7xl first-letter:font-normal first-letter:float-left first-letter:mr-2 first-letter:leading-none first-letter:text-accent mb-6">
           {firstChildren}
         </p>
       )}

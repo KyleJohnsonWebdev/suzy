@@ -17,7 +17,7 @@ function LoadingScreen({ fullScreen = false }) {
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="block w-2 h-2 rounded-full bg-lavender animate-loadingPulse"
+            className="block w-2 h-2 rounded-full bg-accent animate-loadingPulse"
             style={{ animationDelay: `${i * 0.2}s` }}
           />
         ))}

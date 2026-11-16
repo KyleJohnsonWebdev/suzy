@@ -20,7 +20,7 @@ function StatementDetail({ entry }) {
         {/* Back link inside article — inherits the centering correctly */}
         <Link
           to="/entries"
-          className="text-sm text-warm-black/60 hover:text-lavender mb-12 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+          className="text-sm text-muted hover:text-accent mb-12 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
           ← Back to entries
         </Link>
@@ -43,7 +43,7 @@ function StatementDetail({ entry }) {
 
         <TagList
           tags={entry.tags}
-          className="mt-12 pt-12 border-t border-warm-black/10"
+          className="mt-12 pt-12 border-t border-border"
         />
       </article>
     </div>

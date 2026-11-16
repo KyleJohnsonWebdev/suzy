@@ -1,16 +1,55 @@
+import fs from 'node:fs'
+
+// Brand tokens are the single source of truth (src/styles/tokens.json).
+// Colors point at the CSS variables in tokens.css, so they switch with the theme.
+const tokens = JSON.parse(fs.readFileSync(new URL('./src/styles/tokens.json', import.meta.url), 'utf8'))
+
+const colors = Object.fromEntries(
+  tokens.color.tokens.map((t) => [t.name, `rgb(var(--color-${t.name}-rgb) / <alpha-value>)`])
+)
+
+// Type styles become text-type-<name> (e.g. text-type-lead), each with its size,
+// line height, tracking and weight. Prefixed so `body` doesn't clash with the body color.
+const fluid = { 'display-hero': 'clamp(52px, 6.4vw, 92px)' } // per the brand book
+const fontSize = Object.fromEntries(
+  tokens.type.groups.flatMap((g) =>
+    g.styles.map((s) => [
+      `type-${s.name}`,
+      [
+        fluid[s.name] ?? s.fontSize,
+        {
+          lineHeight: String(s.lineHeight),
+          fontWeight: String(s.fontWeight),
+          ...(s.letterSpacing && { letterSpacing: s.letterSpacing }),
+        },
+      ],
+    ])
+  )
+)
+
 /** @type {import('tailwindcss').Config} */
 export default {
+  // dark: matches a saved dark choice, or the system setting when nothing is saved.
+  darkMode: [
+    'variant',
+    [
+      '@media (prefers-color-scheme: dark) { &:not([data-theme=light] *) }',
+      '&:is([data-theme=dark] *)',
+    ],
+  ],
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      colors: {
-        'warm-black': '#1C1C1A',
-        'neutral-white': '#FAFAF8',
-        'lavender': '#C0BEF5',
-        'light-lavender': '#EAE8FD',
+      colors,
+      fontSize,
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+      },
+      ringOffsetColor: {
+        DEFAULT: 'rgb(var(--color-bg-rgb))',
       },
 
       // Animation utilities — wire up all new keyframes defined in index.css

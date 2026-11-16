@@ -20,7 +20,7 @@ function VideoDetail({ entry }) {
         {/* Consistent back link */}
         <Link
           to="/entries"
-          className="text-warm-black/60 hover:text-lavender text-sm mb-10 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+          className="text-muted hover:text-accent text-sm mb-10 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
           ← Back to entries
         </Link>
@@ -47,7 +47,7 @@ function VideoDetail({ entry }) {
         </div>
 
         {entry.caption && (
-          <p className="text-lg text-warm-black/80 mb-8 max-w-3xl leading-relaxed">
+          <p className="text-lg text-body mb-8 max-w-3xl leading-relaxed">
             {entry.caption}
           </p>
         )}

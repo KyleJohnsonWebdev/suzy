@@ -17,7 +17,7 @@ function ImageEntryCard({ entry }) {
     <article className="group">
       <Link to={`/entry/${entry.slug.current}`} className="block">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="aspect-[4/3] overflow-hidden bg-light-lavender">
+          <div className="aspect-[4/3] overflow-hidden bg-lavender">
             <img
               src={urlForImage(entry.image, { width: 900 })}
               alt={entry.image?.alt || entry.title || 'Entry image'}
@@ -33,12 +33,12 @@ function ImageEntryCard({ entry }) {
               className="mb-3"
             />
             {entry.title && (
-              <h2 className="text-3xl font-normal mb-4 group-hover:text-lavender transition-colors">
+              <h2 className="text-3xl font-normal mb-4 group-hover:text-accent transition-colors">
                 {entry.title}
               </h2>
             )}
             {entry.caption && (
-              <p className="text-warm-black/70 leading-relaxed">{entry.caption}</p>
+              <p className="text-body leading-relaxed">{entry.caption}</p>
             )}
           </div>
         </div>

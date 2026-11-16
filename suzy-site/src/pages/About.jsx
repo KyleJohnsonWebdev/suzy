@@ -42,12 +42,12 @@ function About() {
 
       {/* Bio */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl">
-        <div className="space-y-6 text-xl leading-relaxed text-warm-black/80">
+        <div className="space-y-6 text-xl leading-relaxed text-body">
           {page?.body && <PortableText value={page.body} />}
         </div>
 
         {/* Contact column */}
-        <div className="space-y-4 text-warm-black/60">
+        <div className="space-y-4 text-muted">
           {siteSettings?.instagramUrl && (
             <div>
               <p className="text-sm mb-1">Instagram</p>
@@ -55,7 +55,7 @@ function About() {
                 href={siteSettings.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lavender hover:text-warm-black transition-colors"
+                className="text-accent hover:text-ink transition-colors"
               >
                 {siteSettings.instagramHandle
                   ? `@${siteSettings.instagramHandle}`
@@ -70,7 +70,7 @@ function About() {
                 href={siteSettings.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lavender hover:text-warm-black transition-colors"
+                className="text-accent hover:text-ink transition-colors"
               >
                 LinkedIn
               </a>
@@ -83,7 +83,7 @@ function About() {
                 href={siteSettings.threadsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-lavender hover:text-warm-black transition-colors"
+                className="text-accent hover:text-ink transition-colors"
               >
                 Threads
               </a>
@@ -93,7 +93,7 @@ function About() {
             <p className="text-sm mb-1">Get in touch</p>
             <Link
               to="/contact"
-              className="text-lavender hover:text-warm-black transition-colors"
+              className="text-accent hover:text-ink transition-colors"
             >
               Contact →
             </Link>

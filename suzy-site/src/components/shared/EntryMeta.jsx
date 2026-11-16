@@ -8,7 +8,7 @@ function EntryMeta({ publishedAt, entryType, className = '' }) {
     : ''
 
   return (
-    <p className={`text-sm text-warm-black/70 ${className}`}>
+    <p className={`text-sm text-body ${className}`}>
       {date}
       {date && entryType && ' · '}
       {entryType}

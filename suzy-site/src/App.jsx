@@ -27,17 +27,17 @@ function AppShell() {
   const { settings } = useSiteSettings()
 
   const navLinkClass = ({ isActive }) =>
-    `transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2 ${
+    `transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${
       isActive
-        ? 'text-lavender border-b border-lavender pb-0.5'
-        : 'hover:text-lavender'
+        ? 'text-accent border-b border-accent pb-0.5'
+        : 'hover:text-accent'
     }`
 
   return (
     <div className="min-h-screen flex flex-col">
       <ScrollToTop />
 
-      <header className="border-b border-warm-black/10">
+      <header className="border-b border-border">
         <nav
           className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-6"
           aria-label="Main navigation"
@@ -45,7 +45,7 @@ function AppShell() {
           <div className="flex items-center justify-between">
             <Link
               to="/"
-              className="text-xl font-normal hover:text-lavender transition-colors tracking-wide focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+              className="text-xl font-normal hover:text-accent transition-colors tracking-wide focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
             >
               Maybe Special
             </Link>
@@ -76,10 +76,10 @@ function AppShell() {
         </Routes>
       </main>
 
-      <footer className="border-t border-warm-black/10 mt-20">
+      <footer className="border-t border-border mt-20">
         <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-8">
           <div className="flex justify-between items-center text-sm">
-            <p className="text-warm-black/50">
+            <p className="text-muted">
               © {new Date().getFullYear()} Maybe Special
             </p>
             <div className="flex gap-6">
@@ -88,7 +88,7 @@ function AppShell() {
                   href={settings.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                 >
                   Instagram
                 </a>
@@ -98,7 +98,7 @@ function AppShell() {
                   href={settings.linkedinUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                 >
                   LinkedIn
                 </a>
@@ -108,7 +108,7 @@ function AppShell() {
                   href={settings.threadsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                 >
                   Threads
                 </a>

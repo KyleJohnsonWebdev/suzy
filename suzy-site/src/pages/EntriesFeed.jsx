@@ -23,7 +23,7 @@ function EntriesFeed() {
       <h1 className="text-4xl font-normal mb-16">Entries</h1>
 
       {entries.length === 0 ? (
-        <p className="text-warm-black/50">No entries yet.</p>
+        <p className="text-muted">No entries yet.</p>
       ) : (
         <div className="space-y-20">
           {entries.map((entry, index) => (

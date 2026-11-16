@@ -58,8 +58,8 @@ function Contact() {
   if (loading) return <LoadingScreen />
 
   const inputClass =
-    'w-full px-4 py-3 border border-warm-black/20 bg-neutral-white ' +
-    'focus:border-lavender focus:outline-none focus:ring-2 focus:ring-lavender/30 ' +
+    'w-full px-4 py-3 border border-field-border bg-field ' +
+    'focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 ' +
     'transition-colors'
 
   return (
@@ -70,31 +70,31 @@ function Contact() {
         {/* Left column — voice and context */}
         <div>
           {/* Lavender accent line */}
-          <div className="w-12 h-0.5 bg-lavender mb-8" />
+          <div className="w-12 h-0.5 bg-accent mb-8" />
 
           <h1 className="text-5xl font-normal leading-tight mb-8">
             {settings?.contactFormHeading || 'Get in touch'}
           </h1>
 
           {settings?.contactFormDescription ? (
-            <p className="text-xl text-warm-black/70 leading-relaxed mb-8">
+            <p className="text-xl text-body leading-relaxed mb-8">
               {settings.contactFormDescription}
             </p>
           ) : (
-            <p className="text-xl text-warm-black/70 leading-relaxed mb-8">
+            <p className="text-xl text-body leading-relaxed mb-8">
               Whether it's a project, a question, or just something
               worth saying — this is the place.
             </p>
           )}
 
-          <div className="space-y-3 text-sm text-warm-black/50">
+          <div className="space-y-3 text-sm text-muted">
             <p>Response within a few days.</p>
             {settings?.instagramUrl && (
               <a
                 href={settings.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block hover:text-lavender transition-colors"
+                className="block hover:text-accent transition-colors"
               >
                 Instagram → {settings.instagramHandle ? `@${settings.instagramHandle}` : ''}
               </a>
@@ -104,7 +104,7 @@ function Contact() {
                 href={settings.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block hover:text-lavender transition-colors"
+                className="block hover:text-accent transition-colors"
               >
                 LinkedIn →
               </a>
@@ -114,7 +114,7 @@ function Contact() {
                 href={settings.threadsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block hover:text-lavender transition-colors"
+                className="block hover:text-accent transition-colors"
               >
                 Threads →
               </a>
@@ -169,26 +169,26 @@ function Contact() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="px-8 py-3 bg-lavender text-warm-black hover:bg-warm-black hover:text-neutral-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+              className="px-8 py-3 bg-accent text-on-accent hover:bg-ink hover:text-bg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
             >
               {status === 'sending' ? 'Sending…' : 'Send message'}
             </button>
 
             {status === 'success' && (
-              <p className="text-green-700" role="alert">
+              <p className="text-green-700 dark:text-green-400" role="alert">
                 Message sent — thank you.
               </p>
             )}
 
             {status === 'error' && (
-              <p className="text-red-600" role="alert">
+              <p className="text-red-600 dark:text-red-400" role="alert">
                 Something went wrong. Please email directly
                 {settings?.contactEmail && (
                   <>
                     {' '}at{' '}
                     <a
                       href={`mailto:${settings.contactEmail}`}
-                      className="underline hover:text-warm-black transition-colors"
+                      className="underline hover:text-ink transition-colors"
                     >
                       {settings.contactEmail}
                     </a>

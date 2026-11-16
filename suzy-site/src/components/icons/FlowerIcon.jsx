@@ -2,7 +2,7 @@
 import FlowerSVG from '../../assets/flower.svg?react'
 
 // FlowerIcon component - displays the flower shape with custom styling
-export const FlowerIcon = ({ className, fill = "#C0BEF5", fillOpacity = 0.3 }) => {
+export const FlowerIcon = ({ className, fill = "var(--color-doodle)", fillOpacity = 1 }) => {
   return (
     <div className={className}>
       <FlowerSVG 

@@ -19,7 +19,7 @@ function VideoEntryCard({ entry }) {
     <article className="group">
       <Link to={`/entry/${entry.slug.current}`} className="block">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          <div className="relative aspect-[4/3] overflow-hidden bg-light-lavender">
+          <div className="relative aspect-[4/3] overflow-hidden bg-lavender">
             {thumbnail ? (
               <img
                 src={thumbnail}
@@ -28,14 +28,14 @@ function VideoEntryCard({ entry }) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-light-lavender" />
+              <div className="w-full h-full bg-lavender" />
             )}
 
             {/* Play button overlay */}
             <div className="absolute inset-0 bg-lavender/20 group-hover:bg-lavender/30 transition-colors flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-lavender flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <svg
-                  className="w-6 h-6 text-warm-black ml-1"
+                  className="w-6 h-6 text-on-accent ml-1"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -53,12 +53,12 @@ function VideoEntryCard({ entry }) {
               className="mb-3"
             />
             {entry.title && (
-              <h2 className="text-3xl font-normal mb-4 group-hover:text-lavender transition-colors">
+              <h2 className="text-3xl font-normal mb-4 group-hover:text-accent transition-colors">
                 {entry.title}
               </h2>
             )}
             {entry.caption && (
-              <p className="text-warm-black/70 leading-relaxed">{entry.caption}</p>
+              <p className="text-body leading-relaxed">{entry.caption}</p>
             )}
           </div>
         </div>

@@ -37,7 +37,7 @@ function Home() {
           <div className="mt-10">
             <Link
               to="/entries"
-              className="text-sm text-warm-black/50 hover:text-lavender transition-colors focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+              className="text-sm text-muted hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
             >
               View entries ↓
             </Link>
@@ -71,7 +71,7 @@ function Home() {
                   className={`group ${colSpan}`}
                 >
                   {entry.entryType === ENTRY_TYPES.IMAGE && entry.image && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-light-lavender mb-3 overflow-hidden`}>
+                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender mb-3 overflow-hidden`}>
                       <img
                         src={urlForImage(entry.image, { width: isLarge ? 1200 : 600 })}
                         alt={entry.image?.alt || entry.title || 'Entry image'}
@@ -82,7 +82,7 @@ function Home() {
                   )}
 
                   {entry.entryType === ENTRY_TYPES.STATEMENT && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-light-lavender p-6 lg:p-8 flex items-center justify-center mb-3 group-hover:bg-lavender transition-colors`}>
+                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender p-6 lg:p-8 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors`}>
                       <p className="text-center text-lg lg:text-xl leading-relaxed">
                         {truncateAtWord(extractPlainText(entry.body), 120)}
                       </p>
@@ -90,7 +90,7 @@ function Home() {
                   )}
 
                   {entry.entryType === ENTRY_TYPES.VIDEO && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-light-lavender mb-3 relative overflow-hidden`}>
+                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender mb-3 relative overflow-hidden`}>
                       {getYouTubeThumbnail(entry.videoUrl) && (
                         <img
                           src={getYouTubeThumbnail(entry.videoUrl)}
@@ -100,8 +100,8 @@ function Home() {
                         />
                       )}
                       <div className="absolute inset-0 bg-lavender/30 group-hover:bg-lavender/40 transition-colors flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-warm-black flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <svg className="w-5 h-5 text-neutral-white ml-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <div className="w-12 h-12 rounded-full bg-ink flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <svg className="w-5 h-5 text-bg ml-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
@@ -111,11 +111,11 @@ function Home() {
 
                   <div>
                     {entry.title && (
-                      <h3 className={`${isLarge ? 'text-2xl' : 'text-lg'} font-normal group-hover:text-lavender transition-colors mb-1`}>
+                      <h3 className={`${isLarge ? 'text-2xl' : 'text-lg'} font-normal group-hover:text-accent transition-colors mb-1`}>
                         {entry.title}
                       </h3>
                     )}
-                    <p className="text-sm text-warm-black/70">
+                    <p className="text-sm text-body">
                       {new Date(entry.publishedAt).toLocaleDateString()} · {entry.entryType}
                     </p>
                   </div>

@@ -87,7 +87,7 @@ function InstagramFlower({ instagramUrl }) {
           >
             <button
               onClick={() => setIsPanelOpen(true)}
-              className="group focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2 relative"
+              className="group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 relative"
               aria-label="View Instagram feed"
               // Cursor applied inline — avoids injecting a <style> tag from render
               style={{
@@ -97,8 +97,8 @@ function InstagramFlower({ instagramUrl }) {
               <div className={`relative ${flower.size}`}>
                 <FlowerIcon
                   className="w-full h-full group-hover:scale-110 transition-transform duration-300"
-                  fill="#C0BEF5"
-                  fillOpacity={0.4}
+                  fill="var(--color-doodle)"
+                  fillOpacity={1}
                 />
               </div>
             </button>
@@ -110,7 +110,7 @@ function InstagramFlower({ instagramUrl }) {
       {isPanelOpen && (
         <>
           <div
-            className="fixed inset-0 bg-warm-black/40 z-40"
+            className="fixed inset-0 bg-black/40 z-40"
             onClick={() => setIsPanelOpen(false)}
             aria-hidden="true"
           />
@@ -119,14 +119,14 @@ function InstagramFlower({ instagramUrl }) {
             role="dialog"
             aria-modal="true"
             aria-label="Instagram feed"
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-neutral-white z-50 shadow-2xl overflow-y-auto"
+            className="fixed top-0 right-0 h-full w-full max-w-md bg-bg z-50 shadow-2xl overflow-y-auto"
           >
             <div className="p-8">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-2xl font-normal">From Instagram</h2>
                 <button
                   onClick={() => setIsPanelOpen(false)}
-                  className="text-warm-black/60 hover:text-warm-black text-4xl leading-none focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                  className="text-muted hover:text-ink text-4xl leading-none focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                   aria-label="Close Instagram panel"
                 >
                   ×
@@ -146,7 +146,7 @@ function InstagramFlower({ instagramUrl }) {
                       href={instagramUrl || 'https://www.instagram.com/maybespecial/'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`aspect-square overflow-hidden bg-light-lavender relative group block ${
+                      className={`aspect-square overflow-hidden bg-lavender relative group block ${
                         isLast ? 'col-span-2' : ''
                       }`}
                     >
@@ -166,7 +166,7 @@ function InstagramFlower({ instagramUrl }) {
                   href={instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center py-4 border-2 border-lavender text-lavender hover:bg-lavender hover:text-warm-black transition-colors font-normal focus:outline-none focus:ring-2 focus:ring-lavender focus:ring-offset-2"
+                  className="block text-center py-4 border-2 border-accent text-accent hover:bg-accent hover:text-on-accent transition-colors font-normal focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
                 >
                   View on Instagram
                 </a>

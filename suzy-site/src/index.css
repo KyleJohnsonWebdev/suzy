@@ -35,16 +35,18 @@
 }
 
 @layer base {
-  body {
-    @apply bg-neutral-white text-warm-black;
-    font-family: var(--font-sans);
+  html {
+    background-color: var(--color-bg);
   }
 
-  /* Consistent focus ring for all interactive elements.
-     V1 only had focus styles on the flower button.
-     This base rule covers everything — overrides are applied per-component. */
+  body {
+    @apply bg-bg text-ink font-sans;
+  }
+
+  /* Consistent focus ring for all interactive elements, in accent (brand book,
+     Accessibility). Overrides are applied per-component. */
   :focus-visible {
-    outline: 2px solid theme('colors.lavender');
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
   }
 }
@@ -65,7 +67,7 @@
   }
 
   .prose-custom a {
-    @apply text-lavender hover:text-warm-black underline transition-colors;
+    @apply text-accent hover:text-ink underline transition-colors;
   }
 
   /* text-balance for hero headlines — prevents ragged multi-line wrapping.

@@ -4,7 +4,7 @@
  *
  * Fix: inline <style> tag removed. The loadingPulse keyframe
  * is already defined in index.css — the inline version was a
- * duplicate that contradicted the fix made to InstagramFlower.
+ * duplicate.
  */
 function LoadingScreen({ fullScreen = false }) {
   const wrapper = fullScreen

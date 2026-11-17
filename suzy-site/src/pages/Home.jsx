@@ -1,16 +1,27 @@
 import { Link } from 'react-router-dom'
 import { useHomeData } from '../hooks/useHomeData'
-import { urlForImage } from '../utils/image'
-import { getYouTubeThumbnail } from '../utils/youtube'
-import { extractPlainText, truncateAtWord } from '../utils/text'
-import { ENTRY_TYPES } from '../constants/entryTypes'
-import InstagramFlower from '../components/InstagramFlower'
+import { usePageTitle } from '../hooks/usePageTitle'
+import { PortableText } from '../components/shared/PortableText'
 import LoadingScreen from '../components/shared/LoadingScreen'
- import { PortableText } from '../components/shared/PortableText'
 import ErrorScreen from '../components/shared/ErrorScreen'
+import ToothDoodles from '../components/brand/ToothDoodles'
+import { FactsStrip } from '../components/brand/Facts'
+import SelectedWork from '../components/brand/SelectedWork'
+import EntryCard from '../components/entries/EntryCard'
+import LetsConnect from '../components/brand/LetsConnect'
+
+// Three teeth in the band right of the headline on wide screens; one in the
+// top padding on phones, where there's no free band beside the text.
+const HERO_DOODLES = [
+  { className: 'hidden lg:block right-[2%] top-[14%] h-[112px]', duration: 22 },
+  { className: 'hidden lg:block right-[12%] top-[46%] h-[72px]', duration: 18, delay: 3 },
+  { className: 'hidden lg:block right-[3%] bottom-[10%] h-[88px]', duration: 25, delay: 6 },
+  { className: 'lg:hidden right-space-9 top-space-3 h-[72px]', still: true },
+]
 
 function Home() {
-  const { page, featuredEntries, instagramUrl, loading, error } = useHomeData()
+  const { page, featuredEntries, projects, loading, error } = useHomeData()
+  usePageTitle(null)
 
   if (loading) return <LoadingScreen />
 
@@ -25,107 +36,47 @@ function Home() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-12 relative">
-
-      <InstagramFlower instagramUrl={instagramUrl} />
-
-      {page?.heroText && (
-        <div className="min-h-[60vh] flex flex-col justify-center mb-20 relative z-10">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-normal leading-[0.95] max-w-5xl text-balance">
-            {page.heroText}
-          </h1>
-          <div className="mt-10">
-            <Link
-              to="/entries"
-              className="text-sm text-muted hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-            >
-              View entries ↓
-            </Link>
-          </div>
+    <>
+      <section className="relative pb-space-11 pt-space-12">
+        <ToothDoodles placements={HERO_DOODLES} />
+        <div className="container-page relative">
+          {page?.heroText && (
+            <h1 className="max-w-[11em] text-balance text-type-display-hero text-ink">{page.heroText}</h1>
+          )}
+          {page?.body?.length > 0 && (
+            <div className="mt-space-8 max-w-lead">
+              <PortableText value={page.body} paragraphClassName="mb-space-4 text-type-lead text-body" />
+            </div>
+          )}
+          <Link to="/entries" className="mt-space-6 inline-block py-3 text-type-ui text-accent hover:text-ink">
+            View entries ↓
+          </Link>
         </div>
-      )}
+      </section>
 
-      {page?.body && page.body.length > 0 && (
-        <div className="max-w-2xl mb-16">
-          <PortableText value={page.body} />
-        </div>
-      )}
+      <FactsStrip facts={page?.facts} />
+
+      <SelectedWork projects={projects} />
 
       {page?.showFeaturedEntries && featuredEntries.length > 0 && (
-        <div className="mt-20 relative z-10">
-          <h2 className="text-3xl font-normal mb-12">
-            {page.featuredEntriesHeading || 'Featured'}
-          </h2>
-
-          <div className="grid grid-cols-12 gap-6 lg:gap-8">
-            {featuredEntries.map((entry, index) => {
-              const isLarge = index % 3 === 0
-              const colSpan = isLarge
-                ? 'col-span-12 lg:col-span-8'
-                : 'col-span-12 lg:col-span-4'
-
-              return (
-                <Link
-                  key={entry._id}
-                  to={`/entry/${entry.slug.current}`}
-                  className={`group ${colSpan}`}
-                >
-                  {entry.entryType === ENTRY_TYPES.IMAGE && entry.image && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender mb-3 overflow-hidden`}>
-                      <img
-                        src={urlForImage(entry.image, { width: isLarge ? 1200 : 600 })}
-                        alt={entry.image?.alt || entry.title || 'Entry image'}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-
-                  {entry.entryType === ENTRY_TYPES.STATEMENT && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender p-6 lg:p-8 flex items-center justify-center mb-3 group-hover:bg-accent/15 transition-colors`}>
-                      <p className="text-center text-lg lg:text-xl leading-relaxed">
-                        {truncateAtWord(extractPlainText(entry.body), 120)}
-                      </p>
-                    </div>
-                  )}
-
-                  {entry.entryType === ENTRY_TYPES.VIDEO && (
-                    <div className={`${isLarge ? 'aspect-[16/9]' : 'aspect-[3/4]'} bg-lavender mb-3 relative overflow-hidden`}>
-                      {getYouTubeThumbnail(entry.videoUrl) && (
-                        <img
-                          src={getYouTubeThumbnail(entry.videoUrl)}
-                          alt={entry.title || 'Video thumbnail'}
-                          loading="lazy"
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-lavender/30 group-hover:bg-lavender/40 transition-colors flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-ink flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <svg className="w-5 h-5 text-bg ml-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div>
-                    {entry.title && (
-                      <h3 className={`${isLarge ? 'text-2xl' : 'text-lg'} font-normal group-hover:text-accent transition-colors mb-1`}>
-                        {entry.title}
-                      </h3>
-                    )}
-                    <p className="text-sm text-body">
-                      {new Date(entry.publishedAt).toLocaleDateString()} · {entry.entryType}
-                    </p>
-                  </div>
-                </Link>
-              )
-            })}
+        <section aria-labelledby="recent-heading" className="border-t border-border py-space-11">
+          <div className="container-page">
+            <h2 id="recent-heading" className="mb-space-8 text-type-heading-section text-ink">
+              {page.featuredEntriesHeading || 'Recent Things'}
+            </h2>
+            <ul className="space-y-space-8">
+              {featuredEntries.map((entry) => (
+                <li key={entry._id}>
+                  <EntryCard entry={entry} headingLevel={3} />
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
+        </section>
       )}
-    </div>
+
+      <LetsConnect />
+    </>
   )
 }
 

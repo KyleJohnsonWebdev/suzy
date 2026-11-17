@@ -63,7 +63,8 @@ export const HOME_PAGE_QUERY = `
     heroText,
     body,
     showFeaturedEntries,
-    featuredEntriesHeading
+    featuredEntriesHeading,
+    facts[]{ _key, label, value }
   }
 `
 
@@ -72,7 +73,25 @@ export const ABOUT_PAGE_QUERY = `
     title,
     heroText,
     heroImage,
-    body
+    body,
+    facts[]{ _key, label, value }
+  }
+`
+
+// ─── PROJECT QUERIES ──────────────────────────────────────────────────────────
+// The "project" type and the page "facts" field arrive with Phase 4's Studio
+// changes. Until then these return nothing, and Selected Work, the Work nav
+// item and the facts stay hidden.
+
+/** Projects for Selected Work, newest first */
+export const PROJECTS_QUERY = `
+  *[_type == "project" && defined(title)] | order(year desc){
+    _id,
+    title,
+    image,
+    category,
+    year,
+    url
   }
 `
 
@@ -89,7 +108,8 @@ export const SITE_SETTINGS_QUERY = `
     instagramFeedHeading,
     contactEmail,
     contactFormHeading,
-    contactFormDescription
+    contactFormDescription,
+    "hasWork": count(*[_type == "project" && defined(title)]) > 0
   }
 `
 
@@ -102,11 +122,5 @@ export const CONTACT_SETTINGS_QUERY = `
     instagramUrl,
     linkedinUrl,
     threadsUrl
-  }
-`
-
-export const INSTAGRAM_SETTINGS_QUERY = `
-  *[_type == "siteSettings"][0]{
-    instagramUrl
   }
 `

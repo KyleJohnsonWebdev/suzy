@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useEntry } from '../hooks/useEntry'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { ENTRY_TYPES } from '../constants/entryTypes'
 import ImageDetail from '../components/detail/ImageDetail'
 import VideoDetail from '../components/detail/VideoDetail'
@@ -16,6 +17,7 @@ const DETAIL_LAYOUTS = {
 function EntryDetail() {
   const { slug } = useParams()
   const { entry, loading, error } = useEntry(slug)
+  usePageTitle(entry?.title || 'Entries')
 
   if (loading) return <LoadingScreen fullScreen />
 

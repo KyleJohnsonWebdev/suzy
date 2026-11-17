@@ -99,10 +99,8 @@
   }
 }
 
-/* ─── INSTAGRAM FLOWER FLOAT ANIMATION ───────────────────────────────────────
-   Moved from an inline <style> tag inside InstagramFlower.jsx.
-   Injecting @keyframes from a React component render function causes
-   duplicate style tags on re-renders and HMR issues. */
+/* ─── TOOTH DOODLE FLOAT ─────────────────────────────────────────────────────
+   Used by .doodle-float (ToothDoodles). */
 
 @keyframes float {
   0%, 100% {

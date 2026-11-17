@@ -1,12 +1,24 @@
-import { Link } from 'react-router-dom'
 import { useAboutData } from '../hooks/useAboutData'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { urlForImage } from '../utils/image'
 import { PortableText } from '../components/shared/PortableText'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
+import ToothDoodles from '../components/brand/ToothDoodles'
+import { SidebarFacts } from '../components/brand/Facts'
+import LetsConnect from '../components/brand/LetsConnect'
+
+// Two teeth beside the portrait (below the heading, which can run wide) on wide
+// screens; one in the top padding on phones.
+const OPENER_DOODLES = [
+  { className: 'hidden lg:block right-[6%] top-[52%] h-[96px]', duration: 21 },
+  { className: 'hidden lg:block right-[22%] bottom-[12%] h-[72px]', duration: 24, delay: 4 },
+  { className: 'lg:hidden right-space-9 top-space-3 h-[72px]', still: true },
+]
 
 function About() {
-  const { page, siteSettings, loading, error } = useAboutData()
+  const { page, loading, error } = useAboutData()
+  usePageTitle('About')
 
   if (loading) return <LoadingScreen />
 
@@ -20,88 +32,37 @@ function About() {
     )
   }
 
+  // The opener line comes from the About page's Hero Text in Sanity
+  // (the brand's example is "Hi, I'm Suzy."); until it's set, the page title.
+  const opener = page?.heroText || page?.title || 'About'
+
   return (
-    <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-20">
-
-      {/* Name as hero — echoes homepage scale */}
-      <div className="mb-20 max-w-4xl">
-        <h1 className="text-6xl md:text-7xl font-normal leading-[0.95]">
-          {siteSettings?.siteTitle}
-        </h1>
-      </div>
-
-      {page?.heroImage && (
-        <div className="mb-20">
-          <img
-            src={urlForImage(page.heroImage, { width: 640 })}
-            alt={page.heroImage.alt || page.title || 'About'}
-            className="w-72 h-72 md:w-96 md:h-96 rounded-full object-cover"
-          />
+    <>
+      <section className="relative pb-space-11 pt-space-12">
+        <ToothDoodles placements={OPENER_DOODLES} />
+        <div className="container-page relative">
+          <h1 className="max-w-[12em] text-type-display-page text-ink">{opener}</h1>
+          {page?.heroImage && (
+            <img
+              src={urlForImage(page.heroImage, { width: 640 })}
+              alt={page.heroImage.alt || ''}
+              className="mt-space-10 h-64 w-64 rounded-full object-cover md:h-80 md:w-80 dark:ring-1 dark:ring-border"
+            />
+          )}
         </div>
-      )}
+      </section>
 
-      {/* Bio */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl">
-        <div className="space-y-6 text-xl leading-relaxed text-body">
-          {page?.body && <PortableText value={page.body} />}
-        </div>
-
-        {/* Contact column */}
-        <div className="space-y-4 text-muted">
-          {siteSettings?.instagramUrl && (
-            <div>
-              <p className="text-sm mb-1">Instagram</p>
-              <a
-                href={siteSettings.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:text-ink transition-colors"
-              >
-                {siteSettings.instagramHandle
-                  ? `@${siteSettings.instagramHandle}`
-                  : 'Instagram'}
-              </a>
-            </div>
-          )}
-          {siteSettings?.linkedinUrl && (
-            <div>
-              <p className="text-sm mb-1">LinkedIn</p>
-              <a
-                href={siteSettings.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:text-ink transition-colors"
-              >
-                LinkedIn
-              </a>
-            </div>
-          )}
-          {siteSettings?.threadsUrl && (
-            <div>
-              <p className="text-sm mb-1">Threads</p>
-              <a
-                href={siteSettings.threadsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:text-ink transition-colors"
-              >
-                Threads
-              </a>
-            </div>
-          )}
-          <div>
-            <p className="text-sm mb-1">Get in touch</p>
-            <Link
-              to="/contact"
-              className="text-accent hover:text-ink transition-colors"
-            >
-              Contact →
-            </Link>
+      <section aria-label="Bio" className="border-t border-border py-space-11">
+        <div className="container-page grid gap-space-10 lg:grid-cols-[minmax(0,680px)_minmax(0,1fr)]">
+          <div className="max-w-reading">
+            {page?.body && <PortableText value={page.body} paragraphClassName="mb-space-6 text-type-body text-body" />}
           </div>
+          <SidebarFacts facts={page?.facts} />
         </div>
-      </div>
+      </section>
 
-    </div>
+      <LetsConnect />
+    </>
   )
 }
 

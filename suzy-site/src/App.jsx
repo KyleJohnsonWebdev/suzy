@@ -1,122 +1,53 @@
-import { BrowserRouter as Router, Routes, Route, Link, NavLink, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Home from './pages/Home'
 import EntriesFeed from './pages/EntriesFeed'
 import EntryDetail from './pages/EntryDetail'
-import Contact from './pages/Contact'
 import About from './pages/About'
+import Header from './components/layout/Header'
+import Footer from './components/layout/Footer'
 import { useSiteSettings } from './hooks/useSiteSettings'
+import { scrollToSection } from './utils/scrollToSection'
 
-function ScrollToTop() {
-  const { pathname } = useLocation()
+/**
+ * On navigation: jump to the #section if there is one (once Sanity content has
+ * rendered it), otherwise to the top of the page.
+ */
+function ScrollManager() {
+  const { pathname, hash, key } = useLocation()
   useEffect(() => {
+    if (hash) return scrollToSection(decodeURIComponent(hash.slice(1)))
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, hash, key])
   return null
 }
 
 /**
  * AppShell — separated from Router so useLocation() is available.
- *
- * Key fix: <main key={location.pathname}> forces React to remount
- * the element on every route change, which re-triggers animate-pageFade.
- * Without the key, the animation only fires on first load.
+ * <main key={pathname}> remounts on every route change, which re-triggers
+ * animate-pageFade.
  */
 function AppShell() {
-  const location = useLocation()
+  const { pathname } = useLocation()
   const { settings } = useSiteSettings()
 
-  const navLinkClass = ({ isActive }) =>
-    `transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 ${
-      isActive
-        ? 'text-accent border-b border-accent pb-0.5'
-        : 'hover:text-accent'
-    }`
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <ScrollToTop />
+    <div className="flex min-h-screen flex-col">
+      <ScrollManager />
+      <Header showWork={Boolean(settings?.hasWork)} />
 
-      <header className="border-b border-border">
-        <nav
-          className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-6"
-          aria-label="Main navigation"
-        >
-          <div className="flex items-center justify-between">
-            <Link
-              to="/"
-              className="text-xl font-normal hover:text-accent transition-colors tracking-wide focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-            >
-              Maybe Special
-            </Link>
-
-            <div className="flex gap-8">
-              <NavLink to="/about" className={navLinkClass}>
-                About
-              </NavLink>
-              <NavLink to="/entries" className={navLinkClass}>
-                Entries
-              </NavLink>
-              <NavLink to="/contact" className={navLinkClass}>
-                Contact
-              </NavLink>
-            </div>
-          </div>
-        </nav>
-      </header>
-
-      {/* key={location.pathname} re-triggers animate-pageFade on every route change */}
-      <main key={location.pathname} className="flex-1 animate-pageFade">
+      <main key={pathname} className="flex-1 animate-pageFade">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/entries" element={<EntriesFeed />} />
           <Route path="/entry/:slug" element={<EntryDetail />} />
-          <Route path="/contact" element={<Contact />} />
+          {/* Contact is now the Let's Connect band; keep old links working. */}
+          <Route path="/contact" element={<Navigate to={{ pathname: '/', hash: '#contact' }} replace />} />
         </Routes>
       </main>
 
-      <footer className="border-t border-border mt-20">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-8">
-          <div className="flex justify-between items-center text-sm">
-            <p className="text-muted">
-              © {new Date().getFullYear()} Maybe Special
-            </p>
-            <div className="flex gap-6">
-              {settings?.instagramUrl && (
-                <a
-                  href={settings.instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-                >
-                  Instagram
-                </a>
-              )}
-              {settings?.linkedinUrl && (
-                <a
-                  href={settings.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-                >
-                  LinkedIn
-                </a>
-              )}
-              {settings?.threadsUrl && (
-                <a
-                  href={settings.threadsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
-                >
-                  Threads
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer settings={settings} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { client } from '../sanityClient'
 import {
   HOME_PAGE_QUERY,
   FEATURED_ENTRIES_QUERY,
-  INSTAGRAM_SETTINGS_QUERY,
+  PROJECTS_QUERY,
 } from '../queries'
 
 /**
@@ -14,7 +14,7 @@ import {
 export function useHomeData() {
   const [page, setPage] = useState(null)
   const [featuredEntries, setFeaturedEntries] = useState([])
-  const [instagramUrl, setInstagramUrl] = useState(null)
+  const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -22,12 +22,12 @@ export function useHomeData() {
     Promise.all([
       client.fetch(HOME_PAGE_QUERY),
       client.fetch(FEATURED_ENTRIES_QUERY),
-      client.fetch(INSTAGRAM_SETTINGS_QUERY),
+      client.fetch(PROJECTS_QUERY),
     ])
-      .then(([pageData, entriesData, settingsData]) => {
+      .then(([pageData, entriesData, projectsData]) => {
         setPage(pageData || null)
         setFeaturedEntries(entriesData || [])
-        setInstagramUrl(settingsData?.instagramUrl || null)
+        setProjects(projectsData || [])
       })
       .catch((err) => {
         console.error('useHomeData error:', err)
@@ -36,5 +36,5 @@ export function useHomeData() {
       .finally(() => setLoading(false))
   }, [])
 
-  return { page, featuredEntries, instagramUrl, loading, error }
+  return { page, featuredEntries, projects, loading, error }
 }

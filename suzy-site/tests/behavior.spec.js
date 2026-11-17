@@ -32,6 +32,23 @@ test('theme toggle: label, pressed state, saved choice survives reload', async (
 test.describe('navigation', () => {
   onlyIn('light-desktop')
 
+  test('the hero offers two actions: entries (until there is work) and About', async ({ page }) => {
+    await page.goto('/')
+    const hero = page.locator('main section').first()
+    const hasWork = (await page.locator('#work').count()) > 0
+    const primary = hero.getByRole('link', { name: hasWork ? 'See my work' : 'Read entries' })
+    await expect(primary).toBeVisible()
+    await expect(hero.getByRole('link', { name: 'More about me' })).toHaveAttribute('href', '/about')
+    await primary.click()
+    await expect(page).toHaveURL(hasWork ? /\/#work$/ : /\/entries$/)
+  })
+
+  test('Recent Things links to all entries', async ({ page }) => {
+    await page.goto('/')
+    await page.getByRole('link', { name: 'All entries →' }).click()
+    await expect(page).toHaveURL(/\/entries$/)
+  })
+
   test('the current page is marked in the nav', async ({ page }) => {
     await page.goto('/about')
     await expect(page.locator('nav a[aria-current="page"]')).toHaveText('About')

@@ -59,7 +59,7 @@ function LetsConnect() {
     <section id="contact" tabIndex={-1} aria-labelledby="contact-heading" className="bg-lavender py-space-11 focus:outline-none">
       <div className="container-page grid gap-space-10 lg:grid-cols-2">
         <div>
-          <div className="mb-space-8 h-0.5 w-12 bg-accent" aria-hidden="true" />
+          <div className="mb-space-8 h-0.5 w-10 bg-accent" aria-hidden="true" />
           <h2 id="contact-heading" className="text-type-heading-contact text-ink">
             {settings?.contactFormHeading || DEFAULT_HEADING}
           </h2>
@@ -70,12 +70,15 @@ function LetsConnect() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-space-5">
-          <Field id="name" label="Name">
-            <input id="name" name="name" type="text" required autoComplete="name" value={formData.name} onChange={handleChange} className={`${fieldClass} h-12`} />
-          </Field>
-          <Field id="email" label="Email">
-            <input id="email" name="email" type="email" required autoComplete="email" value={formData.email} onChange={handleChange} className={`${fieldClass} h-12`} />
-          </Field>
+          {/* Name and Email share a row when there's room (Refresh mockups). */}
+          <div className="grid gap-space-5 sm:grid-cols-2">
+            <Field id="name" label="Name">
+              <input id="name" name="name" type="text" required autoComplete="name" value={formData.name} onChange={handleChange} className={`${fieldClass} h-12`} />
+            </Field>
+            <Field id="email" label="Email">
+              <input id="email" name="email" type="email" required autoComplete="email" value={formData.email} onChange={handleChange} className={`${fieldClass} h-12`} />
+            </Field>
+          </div>
           <Field id="message" label="Message">
             <textarea id="message" name="message" required rows={6} value={formData.message} onChange={handleChange} className={`${fieldClass} resize-y py-space-3`} />
           </Field>

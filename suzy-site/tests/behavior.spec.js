@@ -77,6 +77,14 @@ test.describe('navigation', () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex')
   })
 
+  test('the footer credits the site\'s designer, linking to his LinkedIn', async ({ page }) => {
+    await page.goto('/')
+    const credit = page.locator('footer').getByRole('link', { name: 'Kyle Johnson' })
+    await expect(credit).toHaveAttribute('href', 'https://www.linkedin.com/in/kjohnson-dev/')
+    await expect(credit).toHaveAttribute('target', '_blank')
+    await expect(page.locator('footer')).toContainText('Site by Kyle Johnson')
+  })
+
   test('social links appear only in the footer', async ({ page }) => {
     for (const path of ['/', '/about', '/entries']) {
       await page.goto(path)

@@ -64,7 +64,8 @@ export const HOME_PAGE_QUERY = `
     body,
     showFeaturedEntries,
     featuredEntriesHeading,
-    facts[]{ _key, label, value }
+    facts[]{ _key, label, value },
+    metaDescription
   }
 `
 
@@ -74,7 +75,8 @@ export const ABOUT_PAGE_QUERY = `
     heroText,
     heroImage,
     body,
-    facts[]{ _key, label, value }
+    facts[]{ _key, label, value },
+    metaDescription
   }
 `
 

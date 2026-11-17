@@ -21,7 +21,7 @@ const HERO_DOODLES = [
 
 function Home() {
   const { page, featuredEntries, projects, loading, error } = useHomeData()
-  useSeo({ description: describe(page?.heroText, page?.body) })
+  useSeo({ description: page?.metaDescription || describe(page?.heroText, page?.body) })
 
   if (loading) return <LoadingScreen />
 

@@ -70,6 +70,15 @@ export default defineType({
       description: 'Heading above featured entries section (e.g., "Selected work" or "Recent thoughts")',
       hidden: ({document}) => !document?.showFeaturedEntries,
     }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Search Description',
+      type: 'text',
+      rows: 3,
+      description:
+        'Shown in search results and link previews. Up to 160 characters. Leave empty to use the start of the page text.',
+      validation: (Rule) => Rule.max(160),
+    }),
   ],
   preview: {
     select: {

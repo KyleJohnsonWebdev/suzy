@@ -18,7 +18,7 @@ const OPENER_DOODLES = [
 
 function About() {
   const { page, loading, error } = useAboutData()
-  useSeo({ title: 'About', description: describe(page?.body), image: page?.heroImage })
+  useSeo({ title: 'About', description: page?.metaDescription || describe(page?.body), image: page?.heroImage })
 
   if (loading) return <LoadingScreen />
 

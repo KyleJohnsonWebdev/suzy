@@ -5,9 +5,11 @@
 @tailwind utilities;
 
 /* ─── INTER, SELF-HOSTED ─────────────────────────────────────────────────────
-   Latin subset, 400 and 500 only (the brand's two weights). Both files are
-   preloaded in index.html. "Inter Fallback" is Arial resized to Inter's
-   metrics (values from Capsize), so text doesn't shift when Inter arrives. */
+   Latin subset, 400 and 500 only (the brand's two weights). 500 (headings,
+   nav, buttons) is preloaded in index.html; 400 loads with the CSS, since
+   preloading both slowed the About portrait (its LCP) in Lighthouse.
+   "Inter Fallback" is Arial resized to Inter's metrics (values from Capsize),
+   so text doesn't shift when Inter arrives. */
 
 @font-face {
   font-family: 'Inter';

@@ -1,4 +1,4 @@
-// Serves dist/ the way GitHub Pages serves docs/: /about → about.html,
+// Serves dist/ the way GitHub Pages serves the site: /about → about.html,
 // /entry/x → entry/x.html, folders → index.html, anything else → 404.html
 // with a 404 status, and text files gzipped (as GitHub Pages does; Lighthouse's
 // throttled load depends on transfer sizes). Used by the Playwright tests and Lighthouse CI.

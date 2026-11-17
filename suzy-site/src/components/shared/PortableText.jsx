@@ -39,7 +39,7 @@ function renderSpan(child, markDefs = []) {
   return child.marks.reduce((acc, mark) => renderMark(mark, acc, markDefs), content)
 }
 
-function renderBlock(block, index) {
+function renderBlock(block, index, paragraphClassName = 'mb-6 text-xl leading-relaxed') {
   const children = (block.children || []).map((child, i) => (
     <span key={i}>{renderSpan(child, block.markDefs)}</span>
   ))
@@ -56,16 +56,17 @@ function renderBlock(block, index) {
         </blockquote>
       )
     default:
-      return <p key={index} className="mb-6 text-xl leading-relaxed">{children}</p>
+      return <p key={index} className={paragraphClassName}>{children}</p>
   }
 }
 
-export function PortableText({ value }) {
+// paragraphClassName lets a page set its brand text style (e.g. lead or body).
+export function PortableText({ value, paragraphClassName }) {
   if (!value || !Array.isArray(value)) return null
   return (
     <div className="prose-custom">
       {value.map((block, index) => {
-        if (block._type === 'block') return renderBlock(block, index)
+        if (block._type === 'block') return renderBlock(block, index, paragraphClassName)
         return null
       })}
     </div>

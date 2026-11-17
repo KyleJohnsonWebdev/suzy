@@ -51,6 +51,28 @@
   }
 }
 
+@layer components {
+  /* Page container: 1280px max with space-9 (40px) gutters (brand book, Layout). */
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--space-9);
+  }
+}
+
+/* Tooth doodles drift slowly; still for visitors who ask for reduced motion. */
+.doodle-float {
+  animation: float var(--doodle-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--doodle-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-float {
+    animation: none;
+  }
+}
+
 @layer utilities {
   .prose-custom {
     @apply leading-relaxed;

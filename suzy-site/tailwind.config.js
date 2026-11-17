@@ -45,6 +45,10 @@ export default {
     extend: {
       colors,
       fontSize,
+      // Brand spacing and radius scales: p-space-9, gap-space-6, rounded-sm (6px)…
+      spacing: Object.fromEntries(tokens.spacing.tokens.map((t) => [t.name, `var(--${t.name})`])),
+      borderRadius: { sm: 'var(--radius-sm)' },
+      maxWidth: { page: '1280px', lead: '620px', reading: '680px' },
       fontFamily: {
         sans: ['var(--font-sans)'],
       },
@@ -80,13 +84,6 @@ export default {
         },
       },
 
-      // Spacing token for consistent section padding
-      // Use these instead of bare py-12 everywhere
-      spacing: {
-        'page-sm': '3rem',    // 48px  — utility pages (contact)
-        'page-md': '4rem',    // 64px  — entries feed
-        'page-lg': '5rem',    // 80px  — homepage
-      },
     },
   },
   plugins: [],

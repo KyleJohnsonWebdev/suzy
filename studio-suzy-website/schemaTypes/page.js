@@ -71,6 +71,45 @@ export default defineType({
       hidden: ({document}) => !document?.showFeaturedEntries,
     }),
     defineField({
+      name: 'facts',
+      title: 'Facts',
+      type: 'array',
+      description:
+        'Short label/value pairs. Home shows four in a strip under the intro; About shows them beside the bio (e.g. degrees, AIGA role). Hidden on the site until you add some.',
+      of: [
+        {
+          type: 'object',
+          name: 'fact',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+              description: 'e.g. "Based in"',
+              validation: (Rule) => Rule.required().max(40),
+            }),
+            defineField({
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              description: 'e.g. "Orlando, Florida"',
+              validation: (Rule) => Rule.required().max(80),
+            }),
+          ],
+          preview: {select: {title: 'value', subtitle: 'label'}},
+        },
+      ],
+      validation: (Rule) =>
+        Rule.max(8).custom((facts, context) =>
+          context.document?.slug?.current === 'home' && facts?.length && facts.length !== 4
+            ? {
+                message: 'The home page facts strip is designed for exactly four facts',
+                level: 'warning',
+              }
+            : true,
+        ),
+    }),
+    defineField({
       name: 'metaDescription',
       title: 'Search Description',
       type: 'text',

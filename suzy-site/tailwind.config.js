@@ -10,7 +10,12 @@ const colors = Object.fromEntries(
 
 // Type styles become text-type-<name> (e.g. text-type-lead), each with its size,
 // line height, tracking and weight. Prefixed so `body` doesn't clash with the body color.
-const fluid = { 'display-hero': 'clamp(52px, 6.4vw, 92px)' } // per the brand book
+// Fluid sizes: display-hero per the brand book, display-page per the
+// Refresh mockups (Redesign Directions).
+const fluid = {
+  'display-hero': 'clamp(52px, 6.4vw, 92px)',
+  'display-page': 'clamp(48px, 5.6vw, 80px)',
+}
 const fontSize = Object.fromEntries(
   tokens.type.groups.flatMap((g) =>
     g.styles.map((s) => [

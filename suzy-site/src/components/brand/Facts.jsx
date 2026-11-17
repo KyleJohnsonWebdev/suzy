@@ -1,5 +1,6 @@
 /**
  * Facts come from a page's `facts` field in Sanity ({ label, value } pairs).
+ * A line break in a value starts a second line.
  * Both components render nothing until there are facts to show.
  */
 
@@ -12,7 +13,7 @@ export function FactsStrip({ facts }) {
         {facts.map((f) => (
           <div key={f._key ?? f.label}>
             <dt className="text-type-label text-muted">{f.label}</dt>
-            <dd className="mt-space-1 text-type-ui text-ink">{f.value}</dd>
+            <dd className="mt-space-1 whitespace-pre-line text-type-ui text-ink">{f.value}</dd>
           </div>
         ))}
       </dl>
@@ -28,7 +29,7 @@ export function SidebarFacts({ facts }) {
       {facts.map((f) => (
         <div key={f._key ?? f.label} className="border-t border-rule pt-space-4">
           <dt className="text-type-label text-muted">{f.label}</dt>
-          <dd className="mt-space-1 text-type-body text-ink">{f.value}</dd>
+          <dd className="mt-space-1 whitespace-pre-line text-type-body text-ink">{f.value}</dd>
         </div>
       ))}
     </dl>

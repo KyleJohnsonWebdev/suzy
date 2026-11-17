@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ButtonLink } from '../components/brand/Button'
 import { useHomeData } from '../hooks/useHomeData'
 import { useSeo, describe } from '../seo/useSeo'
 import { PortableText } from '../components/shared/PortableText'
@@ -48,9 +49,18 @@ function Home() {
               <PortableText value={page.body} paragraphClassName="mb-space-4 text-type-lead text-body" />
             </div>
           )}
-          <Link to="/entries" className="mt-space-6 inline-block py-3 text-type-ui text-accent hover:text-ink">
-            View entries ↓
-          </Link>
+          {/* Two actions under the intro (Redesign Directions › Refresh). Until
+              there's work to show, the primary one points to her entries. */}
+          <div className="mt-space-9 flex flex-wrap gap-space-3">
+            {projects.length > 0 ? (
+              <ButtonLink to={{ pathname: '/', hash: '#work' }}>See my work</ButtonLink>
+            ) : (
+              <ButtonLink to="/entries">Read entries</ButtonLink>
+            )}
+            <ButtonLink to="/about" variant="secondary">
+              More about me
+            </ButtonLink>
+          </div>
         </div>
       </section>
 
@@ -61,9 +71,14 @@ function Home() {
       {page?.showFeaturedEntries && featuredEntries.length > 0 && (
         <section aria-labelledby="recent-heading" className="border-t border-border py-space-11">
           <div className="container-page">
-            <h2 id="recent-heading" className="mb-space-8 text-type-heading-section text-ink">
-              {page.featuredEntriesHeading || 'Recent Things'}
-            </h2>
+            <div className="mb-space-8 flex flex-wrap items-baseline justify-between gap-space-3">
+              <h2 id="recent-heading" className="text-type-heading-section text-ink">
+                {page.featuredEntriesHeading || 'Recent Things'}
+              </h2>
+              <Link to="/entries" className="py-3 text-type-ui text-accent hover:text-ink">
+                All entries →
+              </Link>
+            </div>
             <ul className="space-y-space-8">
               {featuredEntries.map((entry) => (
                 <li key={entry._id}>

@@ -8,12 +8,12 @@ import ToothDoodles from '../components/brand/ToothDoodles'
 import { SidebarFacts } from '../components/brand/Facts'
 import LetsConnect from '../components/brand/LetsConnect'
 
-// Two teeth beside the portrait (below the heading, which can run wide) on wide
-// screens; one in the top padding on phones.
+// Two teeth in the band right of the opener's text on wide screens; one in the
+// top padding below that, where the text runs the full width.
 const OPENER_DOODLES = [
-  { className: 'hidden lg:block right-[6%] top-[52%] h-[96px]', duration: 21 },
-  { className: 'hidden lg:block right-[22%] bottom-[12%] h-[72px]', duration: 24, delay: 4 },
-  { className: 'lg:hidden right-space-9 top-space-3 h-[72px]', still: true },
+  { className: 'hidden xl:block right-[3%] top-[16%] h-[96px]', duration: 21 },
+  { className: 'hidden xl:block right-[11%] bottom-[16%] h-[72px]', duration: 24, delay: 4 },
+  { className: 'xl:hidden right-space-9 top-space-3 h-[72px]', still: true },
 ]
 
 function About() {
@@ -40,18 +40,24 @@ function About() {
     <>
       <section className="relative pb-space-11 pt-space-12">
         <ToothDoodles placements={OPENER_DOODLES} />
-        <div className="container-page relative">
-          <h1 className="max-w-[12em] text-type-display-page text-ink">{opener}</h1>
+        {/* Portrait beside the opener text (Redesign Directions › Refresh — About);
+            they stack on narrow screens. */}
+        <div className="container-page relative flex flex-wrap items-center gap-space-10">
           {page?.heroImage && (
             <img
               src={urlForImage(page.heroImage, { width: 640 })}
               srcSet={[320, 480, 640].map((w) => `${urlForImage(page.heroImage, { width: w })} ${w}w`).join(', ')}
-              sizes="(min-width: 768px) 320px, 256px"
+              sizes="(min-width: 768px) 300px, 256px"
               alt={page.heroImage.alt || ''}
               fetchPriority="high"
-              className="mt-space-10 h-64 w-64 rounded-full object-cover md:h-80 md:w-80 dark:ring-1 dark:ring-border"
+              className="h-64 w-64 flex-none rounded-full object-cover md:h-[300px] md:w-[300px] dark:ring-1 dark:ring-border"
             />
           )}
+          <div className="min-w-0 max-w-[640px] flex-1 basis-[480px]">
+            <p className="text-type-ui font-normal text-muted">About</p>
+            <h1 className="mt-space-4 text-type-display-page text-ink">{opener}</h1>
+            {page?.intro && <p className="mt-space-5 max-w-lead text-type-lead text-body">{page.intro}</p>}
+          </div>
         </div>
       </section>
 

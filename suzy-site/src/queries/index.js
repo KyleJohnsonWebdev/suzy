@@ -73,6 +73,7 @@ export const ABOUT_PAGE_QUERY = `
   *[_type == "page" && slug.current == "about"][0]{
     title,
     heroText,
+    intro,
     heroImage,
     body,
     facts[]{ _key, label, value },

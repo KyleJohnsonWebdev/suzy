@@ -14,7 +14,7 @@ function Footer({ settings }) {
   return (
     <footer className="border-t border-border">
       <div className="container-page flex flex-wrap items-center justify-between gap-x-space-6 py-space-6">
-        <p className="py-3 text-type-meta text-muted">© {new Date().getFullYear()} Maybe Special</p>
+        <p className="py-3 text-type-meta text-muted">© {new Date().getFullYear()} Suzy Johnson · Maybe Special</p>
         {links.length > 0 && (
           <ul className="flex gap-space-6">
             {links.map(([label, href]) => (

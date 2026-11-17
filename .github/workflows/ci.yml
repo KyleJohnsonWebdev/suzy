@@ -2,7 +2,7 @@ name: CI
 
 # Every push is linted, built (with prerendering), tested in a real browser
 # and scored by Lighthouse. Only main deploys, and only when all of that
-# passes, using the exact build that was tested.
+# passes, publishing the exact build that was tested to GitHub Pages.
 on:
   push:
   # Daily rebuild so the prerendered pages (what search engines and link
@@ -143,27 +143,27 @@ jobs:
     needs: [lint, studio, test, lighthouse]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    # Deploys straight to GitHub Pages (Settings › Pages › Source: GitHub
+    # Actions), so nothing is ever pushed to main and main can be protected.
     permissions:
-      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     # Never run two deploys at once (e.g. a push during the scheduled build).
     concurrency:
       group: deploy
       cancel-in-progress: false
-    defaults:
-      run:
-        working-directory: .
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: site
           path: site
-      - name: Publish the tested build to docs/ (GitHub Pages)
-        run: |
-          rm -rf docs
-          mv site docs
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A docs/
-          git diff --cached --quiet || git commit -m "chore: deploy build [skip ci]"
-          git push
+      - name: Package the tested build for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

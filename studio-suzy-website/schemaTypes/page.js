@@ -30,6 +30,15 @@ export default defineType({
       description: 'Large statement at the top of the page',
     }),
     defineField({
+      name: 'intro',
+      title: 'Intro',
+      type: 'text',
+      rows: 2,
+      description:
+        'One or two sentences under the page heading (shown on About). Up to 200 characters.',
+      validation: (Rule) => Rule.max(200),
+    }),
+    defineField({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
@@ -91,8 +100,9 @@ export default defineType({
             defineField({
               name: 'value',
               title: 'Value',
-              type: 'string',
-              description: 'e.g. "Orlando, Florida"',
+              type: 'text',
+              rows: 2,
+              description: 'e.g. "Orlando, Florida". A line break starts a second line.',
               validation: (Rule) => Rule.required().max(80),
             }),
           ],

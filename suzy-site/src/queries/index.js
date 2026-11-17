@@ -81,9 +81,8 @@ export const ABOUT_PAGE_QUERY = `
 `
 
 // ─── PROJECT QUERIES ──────────────────────────────────────────────────────────
-// The "project" type and the page "facts" field arrive with Phase 4's Studio
-// changes. Until then these return nothing, and Selected Work, the Work nav
-// item and the facts stay hidden.
+// Projects and page facts are edited in Studio. With none, Selected Work, the
+// Work nav item and the facts stay hidden.
 
 /** Projects for Selected Work, newest first */
 export const PROJECTS_QUERY = `

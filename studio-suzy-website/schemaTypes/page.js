@@ -41,7 +41,10 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
-          description: 'Important for accessibility and SEO',
+          description:
+            'Describe the image for people who can’t see it (screen readers, search engines). Required.',
+          validation: (Rule) =>
+            Rule.required().error('Add alternative text to describe this image'),
         },
       ],
       description: 'Optional image displayed between the hero text and body content',

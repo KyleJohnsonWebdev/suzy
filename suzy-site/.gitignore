@@ -23,3 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 .DS_Store
+
+# Test and Lighthouse output
+test-results
+playwright-report
+blob-report
+.lighthouseci

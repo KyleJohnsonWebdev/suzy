@@ -1,0 +1,121 @@
+/* Maybe Special — generated from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
+
+/* Light is the default. A saved choice sets data-theme on <html> before first paint
+   (see the inline script in index.html); without one, the system setting decides. */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --color-bg: #F8F8F6;
+  --color-bg-rgb: 248 248 246;
+  --color-surface: #FFFFFF;
+  --color-surface-rgb: 255 255 255;
+  --color-ink: #1C1C1C;
+  --color-ink-rgb: 28 28 28;
+  --color-body: #444444;
+  --color-body-rgb: 68 68 68;
+  --color-muted: #616161;
+  --color-muted-rgb: 97 97 97;
+  --color-border: #E5E4E0;
+  --color-border-rgb: 229 228 224;
+  --color-rule: #D9D8D3;
+  --color-rule-rgb: 217 216 211;
+  --color-accent: #5443C9;
+  --color-accent-rgb: 84 67 201;
+  --color-on-accent: #FFFFFF;
+  --color-on-accent-rgb: 255 255 255;
+  --color-lavender: #E8E5FA;
+  --color-lavender-rgb: 232 229 250;
+  --color-lavender-ink: #5443C9;
+  --color-lavender-ink-rgb: 84 67 201;
+  --color-doodle: #D6D1F5;
+  --color-doodle-rgb: 214 209 245;
+  --color-field: #FFFFFF;
+  --color-field-rgb: 255 255 255;
+  --color-field-border: #86819F;
+  --color-field-border-rgb: 134 129 159;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #141317;
+  --color-bg-rgb: 20 19 23;
+  --color-surface: #1C1B21;
+  --color-surface-rgb: 28 27 33;
+  --color-ink: #F2F1F5;
+  --color-ink-rgb: 242 241 245;
+  --color-body: #C4C2CC;
+  --color-body-rgb: 196 194 204;
+  --color-muted: #A09EAA;
+  --color-muted-rgb: 160 158 170;
+  --color-border: #2C2B33;
+  --color-border-rgb: 44 43 51;
+  --color-rule: #34323C;
+  --color-rule-rgb: 52 50 60;
+  --color-accent: #B4A9FF;
+  --color-accent-rgb: 180 169 255;
+  --color-on-accent: #141317;
+  --color-on-accent-rgb: 20 19 23;
+  --color-lavender: #24213A;
+  --color-lavender-rgb: 36 33 58;
+  --color-lavender-ink: #C9C0FF;
+  --color-lavender-ink-rgb: 201 192 255;
+  --color-doodle: #3B3655;
+  --color-doodle-rgb: 59 54 85;
+  --color-field: #141317;
+  --color-field-rgb: 20 19 23;
+  --color-field-border: #6F6991;
+  --color-field-border-rgb: 111 105 145;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-bg: #141317;
+    --color-bg-rgb: 20 19 23;
+    --color-surface: #1C1B21;
+    --color-surface-rgb: 28 27 33;
+    --color-ink: #F2F1F5;
+    --color-ink-rgb: 242 241 245;
+    --color-body: #C4C2CC;
+    --color-body-rgb: 196 194 204;
+    --color-muted: #A09EAA;
+    --color-muted-rgb: 160 158 170;
+    --color-border: #2C2B33;
+    --color-border-rgb: 44 43 51;
+    --color-rule: #34323C;
+    --color-rule-rgb: 52 50 60;
+    --color-accent: #B4A9FF;
+    --color-accent-rgb: 180 169 255;
+    --color-on-accent: #141317;
+    --color-on-accent-rgb: 20 19 23;
+    --color-lavender: #24213A;
+    --color-lavender-rgb: 36 33 58;
+    --color-lavender-ink: #C9C0FF;
+    --color-lavender-ink-rgb: 201 192 255;
+    --color-doodle: #3B3655;
+    --color-doodle-rgb: 59 54 85;
+    --color-field: #141317;
+    --color-field-rgb: 20 19 23;
+    --color-field-border: #6F6991;
+    --color-field-border-rgb: 111 105 145;
+  }
+}
+
+:root {
+  --font-sans: Inter, 'Inter Fallback', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 64px;
+  --space-11: 96px;
+  --space-12: 112px;
+  --radius-none: 0px;
+  --radius-sm: 6px;
+  --radius-round: 9999px;
+}

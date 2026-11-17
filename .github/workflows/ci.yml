@@ -1,0 +1,169 @@
+name: CI
+
+# Every push is linted, built (with prerendering), tested in a real browser
+# and scored by Lighthouse. Only main deploys, and only when all of that
+# passes, using the exact build that was tested.
+on:
+  push:
+  # Daily rebuild so the prerendered pages (what search engines and link
+  # previews read) pick up content Suzy publishes in Sanity. Visitors always
+  # get live content regardless. 09:00 UTC = 4–5 a.m. in Orlando.
+  schedule:
+    - cron: '0 9 * * *'
+  # "Run workflow" button, e.g. to refresh the site right after publishing.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push to the same branch cancels the older run (main's runs always
+# finish; its deploys are serialized separately below).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+defaults:
+  run:
+    working-directory: suzy-site
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: suzy-site/package-lock.json
+      - run: npm ci
+      - name: ESLint (no warnings allowed)
+        run: npm run lint
+      - name: Brand color contrast (WCAG)
+        run: npm run check:contrast
+
+  studio:
+    name: Studio schema
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: studio-suzy-website
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: studio-suzy-website/package-lock.json
+      - run: npm ci
+      - name: Validate the Sanity schema
+        run: npx sanity schema validate
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: suzy-site/package-lock.json
+      - run: npm ci
+      # The build prerenders every page in headless Chromium.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build and prerender
+        run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: suzy-site/dist
+          if-no-files-found: error
+          retention-days: 7
+
+  test:
+    name: Tests (Playwright + axe)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: suzy-site/package-lock.json
+      - run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: suzy-site/dist
+      - name: Every sitemap page × light/dark × desktop/phone
+        run: npm test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: suzy-site/playwright-report
+          retention-days: 14
+
+  lighthouse:
+    name: Lighthouse (95+)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: suzy-site/package-lock.json
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: suzy-site/dist
+      - name: Lighthouse CI (every sitemap page, mobile, median of 3)
+        run: npm run lighthouse
+      - name: Scores on the summary page
+        if: ${{ !cancelled() }}
+        run: npm run lighthouse:summary
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: lighthouse-reports
+          path: suzy-site/.lighthouseci/reports
+          retention-days: 14
+
+  deploy:
+    name: Deploy
+    needs: [lint, studio, test, lighthouse]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # Never run two deploys at once (e.g. a push during the scheduled build).
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site
+      - name: Publish the tested build to docs/ (GitHub Pages)
+        run: |
+          rm -rf docs
+          mv site docs
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A docs/
+          git diff --cached --quiet || git commit -m "chore: deploy build [skip ci]"
+          git push

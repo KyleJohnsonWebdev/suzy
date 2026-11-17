@@ -23,7 +23,9 @@ export default defineType({
       title: 'Site Description',
       type: 'text',
       rows: 3,
-      description: 'Brief description for SEO and social sharing',
+      description:
+        'Brief description for SEO and social sharing. Up to 160 characters. Used by pages without their own Search Description.',
+      validation: (Rule) => Rule.max(160),
     }),
     defineField({
       name: 'instagramHandle',

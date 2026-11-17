@@ -4,20 +4,23 @@
  *
  * Fix: inline <style> tag removed. The loadingPulse keyframe
  * is already defined in index.css — the inline version was a
- * duplicate that contradicted the fix made to InstagramFlower.
+ * duplicate.
  */
 function LoadingScreen({ fullScreen = false }) {
   const wrapper = fullScreen
     ? 'min-h-screen flex items-center justify-center'
-    : 'max-w-6xl mx-auto px-6 py-20 flex items-center gap-3'
+    : // min-h-screen keeps the footer below the fold while content loads, so it
+      // doesn't jump (layout shift) when the page's Sanity content arrives.
+      'min-h-screen max-w-6xl mx-auto px-6 py-20 flex items-start gap-3'
 
   return (
-    <div className={wrapper}>
+    // data-loading tells the prerender step the page isn't ready yet.
+    <div className={wrapper} data-loading role="status" aria-label="Loading">
       <div className="flex items-center gap-2">
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="block w-2 h-2 rounded-full bg-lavender animate-loadingPulse"
+            className="block w-2 h-2 rounded-full bg-accent animate-loadingPulse"
             style={{ animationDelay: `${i * 0.2}s` }}
           />
         ))}

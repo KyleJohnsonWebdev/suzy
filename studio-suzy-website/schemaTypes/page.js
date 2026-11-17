@@ -41,7 +41,10 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
-          description: 'Important for accessibility and SEO',
+          description:
+            'Describe the image for people who can’t see it (screen readers, search engines). Required.',
+          validation: (Rule) =>
+            Rule.required().error('Add alternative text to describe this image'),
         },
       ],
       description: 'Optional image displayed between the hero text and body content',
@@ -66,6 +69,54 @@ export default defineType({
       type: 'string',
       description: 'Heading above featured entries section (e.g., "Selected work" or "Recent thoughts")',
       hidden: ({document}) => !document?.showFeaturedEntries,
+    }),
+    defineField({
+      name: 'facts',
+      title: 'Facts',
+      type: 'array',
+      description:
+        'Short label/value pairs. Home shows four in a strip under the intro; About shows them beside the bio (e.g. degrees, AIGA role). Hidden on the site until you add some.',
+      of: [
+        {
+          type: 'object',
+          name: 'fact',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+              description: 'e.g. "Based in"',
+              validation: (Rule) => Rule.required().max(40),
+            }),
+            defineField({
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              description: 'e.g. "Orlando, Florida"',
+              validation: (Rule) => Rule.required().max(80),
+            }),
+          ],
+          preview: {select: {title: 'value', subtitle: 'label'}},
+        },
+      ],
+      validation: (Rule) =>
+        Rule.max(8).custom((facts, context) =>
+          context.document?.slug?.current === 'home' && facts?.length && facts.length !== 4
+            ? {
+                message: 'The home page facts strip is designed for exactly four facts',
+                level: 'warning',
+              }
+            : true,
+        ),
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Search Description',
+      type: 'text',
+      rows: 3,
+      description:
+        'Shown in search results and link previews. Up to 160 characters. Leave empty to use the start of the page text.',
+      validation: (Rule) => Rule.max(160),
     }),
   ],
   preview: {

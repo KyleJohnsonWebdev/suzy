@@ -4,7 +4,7 @@
 
 export function Tag({ label }) {
   return (
-    <span className="text-xs px-3 py-1 bg-light-lavender text-warm-black rounded">
+    <span className="text-xs px-3 py-1 bg-lavender text-ink rounded">
       {label}
     </span>
   )

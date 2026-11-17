@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { formatDate } from '../../utils/date'
 import { useNavigate } from 'react-router-dom'
 import { urlForImage } from '../../utils/image'
 import { TagList } from '../shared/Tag'
@@ -26,11 +27,11 @@ function ImageDetail({ entry }) {
   // Escape key to close — matches lightbox convention
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') handleClose()
+      if (e.key === 'Escape') navigate(-1)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [navigate])
 
   // Hide the global nav header while image detail is open
   // so nothing competes with the full-screen image
@@ -43,7 +44,7 @@ function ImageDetail({ entry }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-warm-black">
+    <div className="min-h-screen bg-bg text-ink" data-theme="dark">
 
       {/* Full-screen image area — clicking background closes */}
       <div
@@ -66,7 +67,7 @@ function ImageDetail({ entry }) {
         {/* Close hint — top right, always visible */}
         <button
           onClick={handleClose}
-          className="absolute top-8 right-8 text-neutral-white/60 hover:text-neutral-white text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-white focus:ring-offset-2 flex items-center gap-2"
+          className="absolute top-8 right-8 text-muted hover:text-ink text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 flex items-center gap-2"
           aria-label="Close"
         >
           <span>Esc to close</span>
@@ -76,7 +77,7 @@ function ImageDetail({ entry }) {
         {/* Back link — top left as secondary affordance */}
         <button
           onClick={handleClose}
-          className="absolute top-8 left-8 text-neutral-white/60 hover:text-neutral-white text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-white focus:ring-offset-2"
+          className="absolute top-8 left-8 text-muted hover:text-ink text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
           ← Back
         </button>
@@ -84,14 +85,14 @@ function ImageDetail({ entry }) {
         {/* Title overlay — gradient at bottom so text is always legible */}
         {(entry.title || entry.publishedAt) && (
           <div
-            className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-warm-black/90 to-transparent px-12 pt-24 pb-10"
+            className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-bg/90 to-transparent px-12 pt-24 pb-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-sm text-neutral-white/50 mb-2">
-              {new Date(entry.publishedAt).toLocaleDateString()}
+            <p className="text-sm text-muted mb-2">
+              {formatDate(entry.publishedAt)}
             </p>
             {entry.title && (
-              <h1 className="text-3xl font-normal leading-tight text-neutral-white">
+              <h1 className="text-3xl font-normal leading-tight text-ink">
                 {entry.title}
               </h1>
             )}
@@ -103,7 +104,7 @@ function ImageDetail({ entry }) {
       {(entry.caption || (entry.tags && entry.tags.length > 0)) && (
         <div className="max-w-3xl mx-auto px-6 lg:px-12 py-16">
           {entry.caption && (
-            <p className="text-xl leading-relaxed mb-8 text-neutral-white/70">
+            <p className="text-xl leading-relaxed mb-8 text-body">
               {entry.caption}
             </p>
           )}

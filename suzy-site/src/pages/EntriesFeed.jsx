@@ -1,10 +1,12 @@
 import { useEntries } from '../hooks/useEntries'
+import { useSeo } from '../seo/useSeo'
 import EntryCard from '../components/entries/EntryCard'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
 
 function EntriesFeed() {
   const { entries, loading, error } = useEntries()
+  useSeo({ title: 'Entries' })
 
   if (loading) return <LoadingScreen />
 
@@ -19,23 +21,23 @@ function EntriesFeed() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-12 py-16">
-      <h1 className="text-4xl font-normal mb-16">Entries</h1>
+    <div className="container-page pb-space-11 pt-space-12">
+      <h1 className="mb-space-10 text-type-display-page text-ink">Entries</h1>
 
       {entries.length === 0 ? (
-        <p className="text-warm-black/50">No entries yet.</p>
+        <p className="text-type-body text-muted">No entries yet.</p>
       ) : (
-        <div className="space-y-20">
+        <ul className="space-y-space-8">
           {entries.map((entry, index) => (
-            <div
+            <li
               key={entry._id}
-              className="opacity-0 animate-fadeIn"
+              className="animate-fadeIn opacity-0"
               style={{ animationDelay: `${index * 60}ms`, animationFillMode: 'forwards' }}
             >
-              <EntryCard entry={entry} />
-            </div>
+              <EntryCard entry={entry} headingLevel={2} />
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   )

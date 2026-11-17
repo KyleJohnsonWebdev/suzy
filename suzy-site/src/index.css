@@ -1,19 +1,77 @@
+@import './styles/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── INTER, SELF-HOSTED ─────────────────────────────────────────────────────
+   Latin subset, 400 and 500 only (the brand's two weights). 500 (headings,
+   nav, buttons) is preloaded in index.html; 400 loads with the CSS, since
+   preloading both slowed the About portrait (its LCP) in Lighthouse.
+   "Inter Fallback" is Arial resized to Inter's metrics (values from Capsize),
+   so text doesn't shift when Inter arrives. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT');
+  ascent-override: 90.4365%;
+  descent-override: 22.518%;
+  line-gap-override: 0%;
+  size-adjust: 107.1194%;
+}
+
 @layer base {
-  body {
-    @apply bg-neutral-white text-warm-black;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  html {
+    background-color: var(--color-bg);
   }
 
-  /* Consistent focus ring for all interactive elements.
-     V1 only had focus styles on the flower button.
-     This base rule covers everything — overrides are applied per-component. */
+  body {
+    @apply bg-bg text-ink font-sans;
+  }
+
+  /* Consistent focus ring for all interactive elements, in accent (brand book,
+     Accessibility). Overrides are applied per-component. */
   :focus-visible {
-    outline: 2px solid theme('colors.lavender');
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Page container: 1280px max with space-9 (40px) gutters (brand book, Layout). */
+  .container-page {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--space-9);
+  }
+}
+
+/* Tooth doodles drift slowly; still for visitors who ask for reduced motion. */
+.doodle-float {
+  animation: float var(--doodle-duration, 20s) ease-in-out infinite;
+  animation-delay: var(--doodle-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-float {
+    animation: none;
   }
 }
 
@@ -33,7 +91,7 @@
   }
 
   .prose-custom a {
-    @apply text-lavender hover:text-warm-black underline transition-colors;
+    @apply text-accent hover:text-ink underline transition-colors;
   }
 
   /* text-balance for hero headlines — prevents ragged multi-line wrapping.
@@ -43,10 +101,8 @@
   }
 }
 
-/* ─── INSTAGRAM FLOWER FLOAT ANIMATION ───────────────────────────────────────
-   Moved from an inline <style> tag inside InstagramFlower.jsx.
-   Injecting @keyframes from a React component render function causes
-   duplicate style tags on re-renders and HMR issues. */
+/* ─── TOOTH DOODLE FLOAT ─────────────────────────────────────────────────────
+   Used by .doodle-float (ToothDoodles). */
 
 @keyframes float {
   0%, 100% {

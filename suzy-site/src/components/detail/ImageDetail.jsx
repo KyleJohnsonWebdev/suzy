@@ -27,11 +27,11 @@ function ImageDetail({ entry }) {
   // Escape key to close — matches lightbox convention
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') handleClose()
+      if (e.key === 'Escape') navigate(-1)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [navigate])
 
   // Hide the global nav header while image detail is open
   // so nothing competes with the full-screen image

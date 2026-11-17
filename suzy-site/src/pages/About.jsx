@@ -46,6 +46,7 @@ function About() {
             <img
               src={urlForImage(page.heroImage, { width: 640 })}
               alt={page.heroImage.alt || ''}
+              fetchPriority="high"
               className="mt-space-10 h-64 w-64 rounded-full object-cover md:h-80 md:w-80 dark:ring-1 dark:ring-border"
             />
           )}

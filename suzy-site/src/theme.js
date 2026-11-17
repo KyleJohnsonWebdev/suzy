@@ -17,6 +17,7 @@ export function getSavedTheme() {
 export function getActiveTheme() {
   return (
     getSavedTheme() ??
+    (['light', 'dark'].includes(document.documentElement.dataset.theme) ? document.documentElement.dataset.theme : null) ??
     (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   )
 }
@@ -28,5 +29,17 @@ export function setTheme(theme) {
     localStorage.setItem(KEY, theme)
   } catch {
     // Storage blocked (private mode): the choice still applies for this visit.
+  }
+  window.dispatchEvent(new Event('themechange'))
+}
+
+/** Subscribe to theme changes: a saved choice, or the system setting. */
+export function subscribeTheme(callback) {
+  const mq = window.matchMedia?.('(prefers-color-scheme: dark)')
+  mq?.addEventListener('change', callback)
+  window.addEventListener('themechange', callback)
+  return () => {
+    mq?.removeEventListener('change', callback)
+    window.removeEventListener('themechange', callback)
   }
 }

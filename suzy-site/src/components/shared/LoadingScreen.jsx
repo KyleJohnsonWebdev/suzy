@@ -14,7 +14,8 @@ function LoadingScreen({ fullScreen = false }) {
       'min-h-screen max-w-6xl mx-auto px-6 py-20 flex items-start gap-3'
 
   return (
-    <div className={wrapper}>
+    // data-loading tells the prerender step the page isn't ready yet.
+    <div className={wrapper} data-loading role="status" aria-label="Loading">
       <div className="flex items-center gap-2">
         {[0, 1, 2].map((i) => (
           <span

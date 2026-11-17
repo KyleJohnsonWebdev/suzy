@@ -29,6 +29,18 @@ test('theme toggle: label, pressed state, saved choice survives reload', async (
   await expect(toggle).toHaveAttribute('aria-pressed', String(next === 'dark'))
 })
 
+test('the tooth icons are linked and served', async ({ page, request }) => {
+  await page.goto('/')
+  for (const [selector, href] of [
+    ['link[rel="icon"][type="image/svg+xml"]', '/favicon.svg'],
+    ['link[rel="icon"][sizes="32x32"]', '/favicon.ico'],
+    ['link[rel="apple-touch-icon"]', '/apple-touch-icon.png'],
+  ]) {
+    await expect(page.locator(selector)).toHaveAttribute('href', href)
+    expect((await request.get(href)).status(), href).toBe(200)
+  }
+})
+
 test.describe('navigation', () => {
   onlyIn('light-desktop')
 

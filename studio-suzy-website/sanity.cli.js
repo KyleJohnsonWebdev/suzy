@@ -5,6 +5,9 @@ export default defineCliConfig({
     projectId: 'ygagsfm8',
     dataset: 'production'
   },
+  // Her hosted Studio: https://suzy-website.sanity.studio (set so `sanity deploy`
+  // targets it without asking).
+  studioHost: 'suzy-website',
   deployment: {
     /**
      * Enable auto-updates for studios.

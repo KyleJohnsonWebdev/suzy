@@ -47,8 +47,18 @@ export function useSanityQuery(query, params, { enabled = true } = {}) {
         )
       })
       .catch((error) => {
-        console.error('Sanity query failed:', error)
-        if (!cancelled) setState((prev) => (prev.key === key ? { ...prev, loading: false, error } : prev))
+        if (cancelled) return
+        // A failed background refresh keeps the content already on the page
+        // (e.g. prerendered); only a page with no data shows the error.
+        setState((prev) => {
+          if (prev.key !== key) return prev
+          if (prev.data !== null && !prev.loading) {
+            console.warn('Sanity refresh failed; keeping the current content.', error)
+            return prev
+          }
+          console.error('Sanity query failed:', error)
+          return { ...prev, loading: false, error }
+        })
       })
     return () => {
       cancelled = true

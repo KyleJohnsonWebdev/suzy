@@ -1,12 +1,12 @@
 import { useEntries } from '../hooks/useEntries'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSeo } from '../seo/useSeo'
 import EntryCard from '../components/entries/EntryCard'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
 
 function EntriesFeed() {
   const { entries, loading, error } = useEntries()
-  usePageTitle('Entries')
+  useSeo({ title: 'Entries' })
 
   if (loading) return <LoadingScreen />
 

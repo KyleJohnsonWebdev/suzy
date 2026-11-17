@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useHomeData } from '../hooks/useHomeData'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSeo, describe } from '../seo/useSeo'
 import { PortableText } from '../components/shared/PortableText'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
@@ -21,7 +21,7 @@ const HERO_DOODLES = [
 
 function Home() {
   const { page, featuredEntries, projects, loading, error } = useHomeData()
-  usePageTitle(null)
+  useSeo({ description: describe(page?.heroText, page?.body) })
 
   if (loading) return <LoadingScreen />
 

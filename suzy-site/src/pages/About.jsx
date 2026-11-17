@@ -1,5 +1,5 @@
 import { useAboutData } from '../hooks/useAboutData'
-import { usePageTitle } from '../hooks/usePageTitle'
+import { useSeo, describe } from '../seo/useSeo'
 import { urlForImage } from '../utils/image'
 import { PortableText } from '../components/shared/PortableText'
 import LoadingScreen from '../components/shared/LoadingScreen'
@@ -18,7 +18,7 @@ const OPENER_DOODLES = [
 
 function About() {
   const { page, loading, error } = useAboutData()
-  usePageTitle('About')
+  useSeo({ title: 'About', description: describe(page?.body), image: page?.heroImage })
 
   if (loading) return <LoadingScreen />
 
@@ -45,6 +45,8 @@ function About() {
           {page?.heroImage && (
             <img
               src={urlForImage(page.heroImage, { width: 640 })}
+              srcSet={[320, 480, 640].map((w) => `${urlForImage(page.heroImage, { width: w })} ${w}w`).join(', ')}
+              sizes="(min-width: 768px) 320px, 256px"
               alt={page.heroImage.alt || ''}
               fetchPriority="high"
               className="mt-space-10 h-64 w-64 rounded-full object-cover md:h-80 md:w-80 dark:ring-1 dark:ring-border"

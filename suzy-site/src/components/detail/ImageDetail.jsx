@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { formatDate } from '../../utils/date'
 import { useNavigate } from 'react-router-dom'
 import { urlForImage } from '../../utils/image'
 import { TagList } from '../shared/Tag'
@@ -88,7 +89,7 @@ function ImageDetail({ entry }) {
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-sm text-muted mb-2">
-              {new Date(entry.publishedAt).toLocaleDateString()}
+              {formatDate(entry.publishedAt)}
             </p>
             {entry.title && (
               <h1 className="text-3xl font-normal leading-tight text-ink">

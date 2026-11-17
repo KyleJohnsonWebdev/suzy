@@ -97,6 +97,8 @@ export const PROJECTS_QUERY = `
 
 // ─── SETTINGS QUERIES ─────────────────────────────────────────────────────────
 
+// homeHeroText and defaultShareImage are SEO fallbacks: her home headline for
+// pages without a description, and the About portrait for link previews.
 export const SITE_SETTINGS_QUERY = `
   *[_type == "siteSettings"][0]{
     siteTitle,
@@ -109,7 +111,10 @@ export const SITE_SETTINGS_QUERY = `
     contactEmail,
     contactFormHeading,
     contactFormDescription,
-    "hasWork": count(*[_type == "project" && defined(title)]) > 0
+    "hasWork": count(*[_type == "project" && defined(title)]) > 0,
+    siteDescription,
+    "homeHeroText": *[_type == "page" && slug.current == "home"][0].heroText,
+    "defaultShareImage": *[_type == "page" && slug.current == "about"][0].heroImage
   }
 `
 

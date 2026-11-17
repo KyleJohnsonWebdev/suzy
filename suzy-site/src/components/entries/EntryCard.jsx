@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { formatDate } from '../../utils/date'
 import { urlForImage } from '../../utils/image'
 import { getYouTubeThumbnail } from '../../utils/youtube'
 import { extractPlainText, truncateAtWord } from '../../utils/text'
@@ -20,7 +21,7 @@ function EntryCard({ entry, headingLevel = 2 }) {
   if (entry.entryType === ENTRY_TYPES.IMAGE && !entry.image) return null
 
   const Heading = `h${headingLevel}`
-  const date = entry.publishedAt ? new Date(entry.publishedAt).toLocaleDateString() : ''
+  const date = formatDate(entry.publishedAt)
   const meta = [date, entry.entryType].filter(Boolean).join(' · ')
   const isStatement = entry.entryType === ENTRY_TYPES.STATEMENT
   const excerpt = isStatement ? null : truncateAtWord(entry.caption, 200)

@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'test-results', 'playwright-report', '.lighthouseci']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -25,5 +25,19 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
+  },
+  // Node.js code: build scripts, tool configs and the Playwright tests. They
+  // also hand functions to the browser (page.evaluate), hence browser globals.
+  {
+    files: ['scripts/**/*.{js,mjs,cjs}', 'tests/**/*.js', '*.config.js', '*.cjs'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: { ...globals.node, ...globals.browser },
+    },
+  },
+  {
+    files: ['*.cjs'],
+    languageOptions: { sourceType: 'commonjs' },
   },
 ])

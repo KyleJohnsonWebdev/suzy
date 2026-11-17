@@ -92,7 +92,9 @@ await context.route(/^https:\/\/ygagsfm8\.apicdn\.sanity\.io\//, async (route) =
   if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: cors })
   // Drop the page's Origin/Referer: a server-side request has none, and Sanity
   // rejects the local prerender origin.
-  const { origin, referer, ...headers } = route.request().headers()
+  const headers = { ...route.request().headers() }
+  delete headers.origin
+  delete headers.referer
   const response = await route.fetch({ headers })
   await route.fulfill({ response, headers: { ...response.headers(), ...cors } })
 })

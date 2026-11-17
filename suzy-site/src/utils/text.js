@@ -28,3 +28,31 @@ export function extractPlainText(body) {
     )
     .join(' ')
 }
+
+/**
+ * Splits text into an opening of whole sentences (up to `limit` characters,
+ * at least one sentence, cut at a word if that one is longer) and the rest.
+ * Used by entry cards: the opening becomes the pull quote, the rest the excerpt.
+ *
+ * @param {string} text
+ * @param {number} limit
+ * @returns {{ lead: string, rest: string }}
+ */
+export function splitLead(text, limit = 120) {
+  const clean = (text || '').replace(/\s+/g, ' ').trim()
+  const sentences = clean.match(/[^.!?]+[.!?]+["”’)]*\s*|[^.!?]+$/g) || []
+  let lead = ''
+  let i = 0
+  while (i < sentences.length && (lead === '' || (lead + sentences[i]).trim().length <= limit)) {
+    lead += sentences[i]
+    i++
+  }
+  lead = lead.trim()
+  if (lead.length > limit) return { lead: truncateAtWord(lead, limit), rest: '' }
+  return { lead, rest: sentences.slice(i).join('').trim() }
+}
+
+/** "statement" → "Statement" */
+export function capitalize(word) {
+  return word ? word.charAt(0).toUpperCase() + word.slice(1) : ''
+}

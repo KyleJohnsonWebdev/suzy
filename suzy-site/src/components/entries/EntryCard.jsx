@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { formatDate } from '../../utils/date'
 import { urlForImage } from '../../utils/image'
 import { getYouTubeThumbnail } from '../../utils/youtube'
-import { extractPlainText, truncateAtWord } from '../../utils/text'
+import { capitalize, extractPlainText, splitLead, truncateAtWord } from '../../utils/text'
 import { ENTRY_TYPES } from '../../constants/entryTypes'
 
 /**
@@ -10,8 +10,9 @@ import { ENTRY_TYPES } from '../../constants/entryTypes'
  * Full width: a lavender quote panel beside a surface text panel with meta,
  * title, excerpt and "Read entry →" in accent. Square corners.
  *
- * The quote panel holds what the entry is: a pull quote for statements,
- * the image for image entries, the video thumbnail for videos.
+ * The quote panel holds what the entry is: a pull quote for statements (its
+ * opening sentences; the next ones become the excerpt), the image for image
+ * entries, the video thumbnail for videos. Matches the Refresh mockups.
  *
  * The whole card is clickable through the title link (stretched over the
  * card), so screen readers hear one link named by the title.
@@ -22,17 +23,18 @@ function EntryCard({ entry, headingLevel = 2 }) {
 
   const Heading = `h${headingLevel}`
   const date = formatDate(entry.publishedAt)
-  const meta = [date, entry.entryType].filter(Boolean).join(' · ')
+  const meta = [date, capitalize(entry.entryType)].filter(Boolean).join(' · ')
   const isStatement = entry.entryType === ENTRY_TYPES.STATEMENT
-  const excerpt = isStatement ? null : truncateAtWord(entry.caption, 200)
+  const statement = isStatement ? splitLead(extractPlainText(entry.body)) : null
+  const excerpt = truncateAtWord(isStatement ? statement.rest : entry.caption, 200)
 
   return (
-    <article className="group relative grid focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent md:grid-cols-[5fr_7fr]">
+    <article className="group relative grid border border-border bg-surface focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent md:grid-cols-[5fr_7fr]">
       <div className="relative flex min-h-[220px] items-center bg-lavender">
-        <QuotePanel entry={entry} />
+        <QuotePanel entry={entry} quote={statement?.lead} />
       </div>
 
-      <div className="bg-surface p-space-8 md:p-space-9">
+      <div className="flex flex-col justify-center p-space-8 md:p-space-9">
         {meta && <p className="text-type-meta text-muted">{meta}</p>}
         {entry.title && (
           <Heading className="mt-space-3 text-type-heading-card text-ink">
@@ -53,11 +55,12 @@ function EntryCard({ entry, headingLevel = 2 }) {
   )
 }
 
-function QuotePanel({ entry }) {
+function QuotePanel({ entry, quote }) {
   if (entry.entryType === ENTRY_TYPES.STATEMENT) {
-    const quote = truncateAtWord(extractPlainText(entry.body), 160)
     return quote ? (
-      <blockquote className="p-space-8 text-type-pull-quote text-ink md:p-space-9">{quote}</blockquote>
+      <blockquote className="p-space-8 text-type-pull-quote text-ink md:p-space-9">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
     ) : null
   }
 

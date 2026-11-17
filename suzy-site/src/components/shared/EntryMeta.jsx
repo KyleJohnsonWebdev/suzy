@@ -1,4 +1,5 @@
 import { formatDate } from '../../utils/date'
+import { capitalize } from '../../utils/text'
 
 /**
  * Renders the standardised entry metadata line: "{date} · {type}"
@@ -11,7 +12,7 @@ function EntryMeta({ publishedAt, entryType, className = '' }) {
     <p className={`text-sm text-body ${className}`}>
       {date}
       {date && entryType && ' · '}
-      {entryType}
+      {capitalize(entryType)}
     </p>
   )
 }

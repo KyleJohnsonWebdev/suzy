@@ -57,7 +57,7 @@ function Header({ showWork }) {
               <NavLink to="/about" className={navClass}>About</NavLink>
             </li>
             <li>
-              <NavLink to="/entries" className={navClass}>Blog</NavLink>
+              <NavLink to="/blog" className={navClass}>Blog</NavLink>
             </li>
             <li>
               <Link

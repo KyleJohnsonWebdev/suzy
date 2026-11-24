@@ -16,7 +16,7 @@ import { TagList } from '../shared/Tag'
  * - Caption and tags accessible by scrolling below
  *
  * Uses useNavigate(-1) so the user returns to wherever they came from
- * (feed, homepage featured grid) rather than always forcing /entries.
+ * (feed, homepage featured grid) rather than always forcing /blog.
  * This preserves their scroll position context.
  */
 function ImageDetail({ entry }) {

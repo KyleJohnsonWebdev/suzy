@@ -13,7 +13,7 @@ function EntriesFeed() {
   if (error) {
     return (
       <ErrorScreen
-        message="We couldn't load the entries. Please try again."
+        message="We couldn't load the blog. Please try again."
         backTo="/"
         backLabel="← Go home"
       />
@@ -25,7 +25,7 @@ function EntriesFeed() {
       <h1 className="mb-space-10 text-type-display-page text-ink">Recent Things I've Thought or Done</h1>
 
       {entries.length === 0 ? (
-        <p className="text-type-body text-muted">No entries yet.</p>
+        <p className="text-type-body text-muted">Nothing here yet.</p>
       ) : (
         <ul className="space-y-space-8">
           {entries.map((entry, index) => (

@@ -52,13 +52,19 @@ test.describe('navigation', () => {
     await expect(primary).toBeVisible()
     await expect(hero.getByRole('link', { name: 'Who am I?' })).toHaveAttribute('href', '/about')
     await primary.click()
-    await expect(page).toHaveURL(hasWork ? /\/#work$/ : /\/entries$/)
+    await expect(page).toHaveURL(hasWork ? /\/#work$/ : /\/blog$/)
   })
 
-  test('Recent Things links to all entries', async ({ page }) => {
+  test('Recent Things links to the blog', async ({ page }) => {
     await page.goto('/')
-    await page.getByRole('link', { name: 'All entries →' }).click()
-    await expect(page).toHaveURL(/\/entries$/)
+    await page.getByRole('link', { name: 'See the blog →' }).click()
+    await expect(page).toHaveURL(/\/blog$/)
+  })
+
+  test('the old /entries address redirects to the blog', async ({ page }) => {
+    await page.goto('/entries')
+    await expect(page).toHaveURL(/\/blog$/)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText("Recent Things I've Thought or Done")
   })
 
   test('the current page is marked in the nav', async ({ page }) => {
@@ -67,7 +73,7 @@ test.describe('navigation', () => {
   })
 
   test('Contact jumps to the Let\'s Connect band and moves focus there', async ({ page }) => {
-    await page.goto('/entries')
+    await page.goto('/blog')
     await page.getByRole('link', { name: 'Contact', exact: true }).click()
     await expect(page).toHaveURL(/\/#contact$/)
     await expect(page.locator('#contact')).toBeFocused()
@@ -98,7 +104,7 @@ test.describe('navigation', () => {
   })
 
   test('social links appear only in the footer', async ({ page }) => {
-    for (const path of ['/', '/about', '/entries']) {
+    for (const path of ['/', '/about', '/blog']) {
       await page.goto(path)
       const outside = await page.evaluate(
         () =>

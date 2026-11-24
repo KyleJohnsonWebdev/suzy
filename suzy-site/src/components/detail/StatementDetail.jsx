@@ -19,10 +19,10 @@ function StatementDetail({ entry }) {
 
         {/* Back link inside article — inherits the centering correctly */}
         <Link
-          to="/entries"
+          to="/blog"
           className="text-sm text-muted hover:text-accent mb-12 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
-          ← Back to entries
+          ← Back to blog
         </Link>
 
         <header className="mb-12">

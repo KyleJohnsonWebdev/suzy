@@ -19,10 +19,10 @@ function VideoDetail({ entry }) {
 
         {/* Consistent back link */}
         <Link
-          to="/entries"
+          to="/blog"
           className="text-muted hover:text-accent text-sm mb-10 inline-block transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
-          ← Back to entries
+          ← Back to blog
         </Link>
 
         <header className="mb-8">

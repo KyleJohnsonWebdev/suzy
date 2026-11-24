@@ -54,7 +54,7 @@ function Home() {
             {projects.length > 0 ? (
               <ButtonLink to={{ pathname: '/', hash: '#work' }}>See my work</ButtonLink>
             ) : (
-              <ButtonLink to="/entries">Good Thoughts</ButtonLink>
+              <ButtonLink to="/blog">Good Thoughts</ButtonLink>
             )}
             <ButtonLink to="/about" variant="secondary">
               Who am I?
@@ -74,8 +74,8 @@ function Home() {
               <h2 id="recent-heading" className="text-type-heading-section text-ink">
                 {page.featuredEntriesHeading || 'Recent Things'}
               </h2>
-              <Link to="/entries" className="py-3 text-type-ui text-accent hover:text-ink">
-                All entries →
+              <Link to="/blog" className="py-3 text-type-ui text-accent hover:text-ink">
+                See the blog →
               </Link>
             </div>
             <ul className="space-y-space-8">

@@ -8,7 +8,7 @@ const sitemap = fs.readFileSync(new URL('../dist/sitemap.xml', import.meta.url),
 const pages = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].replace(SITE_URL, '') || '/')
 
 test('the sitemap lists the fixed pages', () => {
-  expect(pages).toEqual(expect.arrayContaining(['/', '/about', '/entries']))
+  expect(pages).toEqual(expect.arrayContaining(['/', '/about', '/blog']))
 })
 
 for (const path of pages) {

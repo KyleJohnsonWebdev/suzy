@@ -32,8 +32,8 @@ function EntryDetail() {
     return (
       <ErrorScreen
         message="We couldn't load this entry."
-        backTo="/entries"
-        backLabel="← Back to entries"
+        backTo="/blog"
+        backLabel="← Back to blog"
       />
     )
   }
@@ -42,8 +42,8 @@ function EntryDetail() {
     return (
       <ErrorScreen
         message="Entry not found."
-        backTo="/entries"
-        backLabel="← Back to entries"
+        backTo="/blog"
+        backLabel="← Back to blog"
       />
     )
   }
@@ -53,8 +53,8 @@ function EntryDetail() {
     return (
       <ErrorScreen
         message="Unknown entry type."
-        backTo="/entries"
-        backLabel="← Back to entries"
+        backTo="/blog"
+        backLabel="← Back to blog"
       />
     )
   }

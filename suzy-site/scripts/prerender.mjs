@@ -48,7 +48,7 @@ const pageUpdated = Object.fromEntries(content.pages.map((p) => [p.slug, p._upda
 const routes = [
   { route: '/', file: 'index.html', lastmod: pageUpdated.home },
   { route: '/about', file: 'about.html', lastmod: pageUpdated.about },
-  { route: '/entries', file: 'entries.html', lastmod: content.latestEntry },
+  { route: '/blog', file: 'blog.html', lastmod: content.latestEntry },
 ]
 for (const e of content.entries) {
   if (!SLUG.test(e.slug)) {
@@ -185,6 +185,25 @@ ${routes.map((r) => `  <url>\n    <loc>${SITE_URL}${r.route}</loc>${day(r.lastmo
 </urlset>
 `
 await fs.writeFile(path.join(DIST, 'sitemap.xml'), sitemap)
+
+// The blog was at /entries until 2026-11. A static redirect page keeps old
+// links and bookmarks working (GitHub Pages has no server-side redirects).
+await fs.writeFile(
+  path.join(DIST, 'entries.html'),
+  `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blog — maybespecial</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="${SITE_URL}/blog" />
+    <meta http-equiv="refresh" content="0; url=/blog" />
+    <script>location.replace('/blog' + location.search + location.hash)</script>
+  </head>
+  <body><p>The blog has moved to <a href="/blog">/blog</a>.</p></body>
+</html>
+`
+)
 await fs.writeFile(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
 
-console.log(`\nPrerendered ${routes.length} pages; wrote 404.html, sitemap.xml, robots.txt.`)
+console.log(`\nPrerendered ${routes.length} pages; wrote 404.html, entries.html (redirect), sitemap.xml, robots.txt.`)

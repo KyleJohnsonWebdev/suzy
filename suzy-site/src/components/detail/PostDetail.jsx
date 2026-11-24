@@ -13,10 +13,10 @@ function PostDetail({ entry }) {
     <div className="min-h-screen py-20">
       <article className="mx-auto max-w-2xl px-6 lg:px-12">
         <Link
-          to="/entries"
+          to="/blog"
           className="mb-12 inline-block text-sm text-muted transition-colors hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
         >
-          ← Back to entries
+          ← Back to blog
         </Link>
 
         <header className="mb-12">

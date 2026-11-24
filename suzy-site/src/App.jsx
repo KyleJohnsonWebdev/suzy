@@ -49,7 +49,9 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/entries" element={<EntriesFeed />} />
+            <Route path="/blog" element={<EntriesFeed />} />
+            {/* The blog was called Entries until 2026-11; keep old links working. */}
+            <Route path="/entries" element={<Navigate to="/blog" replace />} />
             <Route path="/entry/:slug" element={<EntryDetail />} />
             {/* Contact is now the Let's Connect band; keep old links working. */}
             <Route path="/contact" element={<Navigate to={{ pathname: '/', hash: '#contact' }} replace />} />

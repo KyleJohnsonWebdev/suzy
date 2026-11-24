@@ -1,6 +1,6 @@
-# Maybe Special: design guide
+# maybespecial: design guide
 
-The design choices behind the November 2026 refresh of [maybespecial.com](https://maybespecial.com), the site for Maybe Special, Suzy Johnson's design practice.
+The design choices behind the November 2026 refresh of [maybespecial.com](https://maybespecial.com), the site for maybespecial, Suzy Johnson's design practice.
 
 The refresh evolves the existing site rather than replacing it. It keeps the same headline, the same tooth doodles and one typeface. It also fixes what an audit of the old site found ([quality/baseline.md](../quality/baseline.md)). The site is quiet, typographic and personal: a calm off-white page, one sans-serif typeface, a single violet accent, lavender tints and a few hand-drawn tooth doodles.
 
@@ -30,8 +30,8 @@ Every value here comes from [`suzy-site/src/styles/tokens.json`](../suzy-site/sr
 
 ## Brand at a glance
 
-- **Name:** "Maybe Special" (two words, title case) for the practice; "Suzy Johnson" for the person. Never "MaybeSpecial" or "maybe_special".
-- **Page titles:** `Page — Maybe Special` (e.g. `About — Maybe Special`). The home page is `Maybe Special — Suzy Johnson`.
+- **Name:** "maybespecial" (one word, all lowercase, as Suzy asked in November 2026) for the practice; "Suzy Johnson" for the person. Never "Maybe Special" or "MaybeSpecial".
+- **Page titles:** `Page — maybespecial` (e.g. `About — maybespecial`). The home page is `maybespecial — Suzy Johnson`.
 - **Personality:** warm, wry and unpretentious; expert without showing off. The "maybe" is humility with a wink.
 
 ## Voice and content
@@ -94,7 +94,7 @@ One family, **Inter**, at weights 400 and 500. Hierarchy comes from size and tig
 
 ## Motif: tooth doodles
 
-Hand-drawn tooth outlines float in the background of the hero and the About opener. One of them is also the site icon.
+Hand-drawn tooth outlines float in the background of the hero and the About opener on wide screens. One of them is also the site icon. Phones show no floating teeth; the tooth sits in a circle beside the wordmark instead.
 
 - Outline only, in `doodle`, with a 2.5–4px stroke, mixing 2–3 sizes (about 44px to 140px tall).
 - At most three per screen. Never behind text, and never in the contact band or footer. The old site broke both rules.
@@ -102,7 +102,7 @@ Hand-drawn tooth outlines float in the background of the hero and the About open
 
 ## Components
 
-- **Header:** the "Maybe Special" wordmark on the left. The nav is About, Entries and Contact, plus Work when there are projects to show, followed by the theme toggle. The active page gets a 2px `accent` underline and `aria-current="page"`.
+- **Header:** the "maybespecial" wordmark on the left (on phones, with the tooth in a 44px circle beside it). The nav is About, Blog and Contact, plus Work when there are projects to show, followed by the theme toggle. The active page gets a 2px `accent` underline and `aria-current="page"`.
 - **Theme toggle:** a 44px circle with a moon icon in light and a sun in dark. Its label says what it switches *to*, and it uses `aria-pressed`.
 - **Buttons:** primary is an `accent` fill with `on-accent` text, 48px tall; secondary is a 1px `ink` outline. One primary button per view.
 - **Facts strip:** four label/value pairs on `surface`, between hairlines.

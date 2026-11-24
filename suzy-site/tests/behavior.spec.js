@@ -44,13 +44,13 @@ test('the tooth icons are linked and served', async ({ page, request }) => {
 test.describe('navigation', () => {
   onlyIn('light-desktop')
 
-  test('the hero offers two actions: entries (until there is work) and About', async ({ page }) => {
+  test('the hero offers two actions: the blog (until there is work) and About', async ({ page }) => {
     await page.goto('/')
     const hero = page.locator('main section').first()
     const hasWork = (await page.locator('#work').count()) > 0
-    const primary = hero.getByRole('link', { name: hasWork ? 'See my work' : 'Read entries' })
+    const primary = hero.getByRole('link', { name: hasWork ? 'See my work' : 'Good Thoughts' })
     await expect(primary).toBeVisible()
-    await expect(hero.getByRole('link', { name: 'More about me' })).toHaveAttribute('href', '/about')
+    await expect(hero.getByRole('link', { name: 'Who am I?' })).toHaveAttribute('href', '/about')
     await primary.click()
     await expect(page).toHaveURL(hasWork ? /\/#work$/ : /\/entries$/)
   })

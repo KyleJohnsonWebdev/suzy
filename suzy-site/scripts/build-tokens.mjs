@@ -23,7 +23,7 @@ const colorVars = (theme) =>
 const scale = (family, prefix) =>
   tokens[family].tokens.map((t) => `  --${t.name.startsWith(prefix) ? t.name : prefix + t.name}: ${t.value};`).join('\n')
 
-const css = `/* Maybe Special — generated from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
+const css = `/* maybespecial — generated from tokens.json by scripts/build-tokens.mjs. Do not edit by hand. */
 
 /* Light is the default. A saved choice sets data-theme on <html> before first paint
    (see the inline script in index.html); without one, the system setting decides. */

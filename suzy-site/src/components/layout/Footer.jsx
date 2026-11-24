@@ -18,7 +18,7 @@ function Footer({ settings }) {
     <footer className="border-t border-border">
       <div className="container-page flex flex-wrap items-center justify-between gap-x-space-6 py-space-6">
         <div className="py-3 text-type-meta text-muted">
-          <p>© {new Date().getFullYear()} Suzy Johnson · Maybe Special</p>
+          <p>© {new Date().getFullYear()} Suzy Johnson · maybespecial</p>
           {/* Designer credit: the site's builder, linked to his LinkedIn. */}
           <p className="mt-space-1">
             Site by{' '}

@@ -5,9 +5,10 @@ import Button from './Button'
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/maqjyval'
 const INITIAL_FORM = { name: '', email: '', message: '' }
 
-// Fallbacks match what's in Sanity today, so nothing shifts while settings load.
-const DEFAULT_HEADING = "Let's Connect"
-const DEFAULT_LINE = "Whether it's a project, a question, or just something worth saying — this is the place."
+// Fallbacks match what's in Sanity, so nothing shifts while settings load.
+// Suzy's wording (email, 2026-11-24).
+const DEFAULT_HEADING = 'Get in Touch'
+const DEFAULT_LINE = 'If you find you would like to work with or share thoughts with me—This would be the place.'
 
 const fieldClass =
   'block w-full rounded-sm border border-field-border bg-field px-space-4 text-type-body text-ink ' +

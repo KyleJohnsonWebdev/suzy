@@ -6,7 +6,7 @@ import ErrorScreen from '../components/shared/ErrorScreen'
 
 function EntriesFeed() {
   const { entries, loading, error } = useEntries()
-  useSeo({ title: 'Entries' })
+  useSeo({ title: 'Blog' })
 
   if (loading) return <LoadingScreen />
 
@@ -22,7 +22,7 @@ function EntriesFeed() {
 
   return (
     <div className="container-page pb-space-11 pt-space-12">
-      <h1 className="mb-space-10 text-type-display-page text-ink">Entries</h1>
+      <h1 className="mb-space-10 text-type-display-page text-ink">Recent Things I've Thought or Done</h1>
 
       {entries.length === 0 ? (
         <p className="text-type-body text-muted">No entries yet.</p>

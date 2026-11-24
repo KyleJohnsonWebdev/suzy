@@ -129,7 +129,7 @@ for (const { route, file } of routes) {
     if (problem) throw new Error(`${problem}${errors.length ? ` [${errors.join(' | ').slice(0, 400)}]` : ''}`)
     if (errors.length) throw new Error(`console errors: ${errors.join(' | ').slice(0, 300)}`)
 
-    // React renders "© {year} Maybe Special" as separate text nodes, but saved
+    // React renders "© {year} maybespecial" as separate text nodes, but saved
     // HTML merges them, and hydration then fails with a text mismatch. React's
     // own server rendering separates adjacent text with <!-- -->; do the same.
     await page.evaluate(() => {

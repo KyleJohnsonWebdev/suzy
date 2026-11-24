@@ -12,7 +12,8 @@ import { ENTRY_TYPES } from '../../constants/entryTypes'
  *
  * The quote panel holds what the entry is: a pull quote for statements (its
  * opening sentences; the next ones become the excerpt), the image for image
- * entries, the video thumbnail for videos. Matches the Refresh mockups.
+ * entries, the video thumbnail for videos. Posts get a pull quote from their
+ * opening text, like statements. Matches the Refresh mockups.
  *
  * The whole card is clickable through the title link (stretched over the
  * card), so screen readers hear one link named by the title.
@@ -24,9 +25,11 @@ function EntryCard({ entry, headingLevel = 2 }) {
   const Heading = `h${headingLevel}`
   const date = formatDate(entry.publishedAt)
   const meta = [date, capitalize(entry.entryType)].filter(Boolean).join(' · ')
+  const isPost = entry.entryType === ENTRY_TYPES.POST
   const isStatement = entry.entryType === ENTRY_TYPES.STATEMENT
-  const statement = isStatement ? splitLead(extractPlainText(entry.body)) : null
-  const excerpt = truncateAtWord(isStatement ? statement.rest : entry.caption, 200)
+  const statement =
+    isStatement || isPost ? splitLead(extractPlainText(isPost ? entry.postBody : entry.body)) : null
+  const excerpt = truncateAtWord(statement ? statement.rest : entry.caption, 200)
 
   return (
     <article className="group relative grid border border-border bg-surface focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent md:grid-cols-[5fr_7fr]">
@@ -56,7 +59,19 @@ function EntryCard({ entry, headingLevel = 2 }) {
 }
 
 function QuotePanel({ entry, quote }) {
-  if (entry.entryType === ENTRY_TYPES.STATEMENT) {
+  if (entry.entryType === ENTRY_TYPES.POST && !quote) {
+    const photo = entry.postBody?.find((b) => b._type === 'image')
+    return photo ? (
+      <img
+        src={urlForImage(photo, { width: 900 })}
+        alt={photo.alt || ''}
+        loading="lazy"
+        className="aspect-[4/3] h-full w-full object-cover"
+      />
+    ) : null
+  }
+
+  if (entry.entryType === ENTRY_TYPES.STATEMENT || entry.entryType === ENTRY_TYPES.POST) {
     return quote ? (
       <blockquote className="p-space-8 text-type-pull-quote text-ink md:p-space-9">
         &ldquo;{quote}&rdquo;

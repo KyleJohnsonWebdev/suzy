@@ -39,7 +39,7 @@ for (const path of pages) {
       const html = await (await request.get(path)).text()
       const meta = (attr, key) => html.match(new RegExp(`<meta ${attr}="${key}" content="([^"]*)"`))?.[1]
       const title = html.match(/<title>([^<]*)<\/title>/)?.[1]
-      expect(title).toMatch(/^(Maybe Special — Suzy Johnson|.+ — Maybe Special)$/)
+      expect(title).toMatch(/^(maybespecial — Suzy Johnson|.+ — maybespecial)$/)
       const description = meta('name', 'description')
       expect(description, 'meta description').toBeTruthy()
       expect(description.length).toBeLessThanOrEqual(160)

@@ -8,6 +8,7 @@ const INITIAL_FORM = { name: '', email: '', message: '' }
 // Fallbacks match what's in Sanity, so nothing shifts while settings load.
 // Suzy's wording (email, 2026-11-24).
 const DEFAULT_HEADING = 'Get in Touch'
+const DEFAULT_NOTE = 'Response within a few days.'
 const DEFAULT_LINE = 'If you find you would like to work with or share thoughts with me—This would be the place.'
 
 const fieldClass =
@@ -67,7 +68,7 @@ function LetsConnect() {
           <p className="mt-space-6 max-w-lead text-type-lead text-body">
             {settings?.contactFormDescription || DEFAULT_LINE}
           </p>
-          <p className="mt-space-6 text-type-meta text-muted">Response within a few days.</p>
+          <p className="mt-space-6 text-type-meta text-muted">{settings?.contactReplyNote || DEFAULT_NOTE}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-space-5">

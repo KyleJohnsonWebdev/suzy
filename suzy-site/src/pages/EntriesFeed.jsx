@@ -1,12 +1,14 @@
-import { useEntries } from '../hooks/useEntries'
+import { useBlogPage } from '../hooks/useBlogPage'
 import { useSeo } from '../seo/useSeo'
 import EntryCard from '../components/entries/EntryCard'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
 
+const DEFAULT_HEADING = "Recent Things I've Thought or Done"
+
 function EntriesFeed() {
-  const { entries, loading, error } = useEntries()
-  useSeo({ title: 'Blog' })
+  const { entries, settings, loading, error } = useBlogPage()
+  useSeo({ title: 'Blog', description: settings?.blogIntro })
 
   if (loading) return <LoadingScreen />
 
@@ -22,7 +24,11 @@ function EntriesFeed() {
 
   return (
     <div className="container-page pb-space-11 pt-space-12">
-      <h1 className="mb-space-10 text-type-display-page text-ink">Recent Things I've Thought or Done</h1>
+      {/* Heading and intro are editable in Studio (Site Settings › Blog page). */}
+      <header className="mb-space-10">
+        <h1 className="text-type-display-page text-ink">{settings?.blogHeading || DEFAULT_HEADING}</h1>
+        {settings?.blogIntro && <p className="mt-space-5 max-w-lead text-type-lead text-body">{settings.blogIntro}</p>}
+      </header>
 
       {entries.length === 0 ? (
         <p className="text-type-body text-muted">Nothing here yet.</p>

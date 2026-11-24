@@ -1,9 +1,30 @@
 import {defineField, defineType} from 'sanity'
 
+// A short label on the home page, with the site's default as the placeholder.
+const labelField = (name, title, placeholder, description) =>
+  defineField({
+    name,
+    title,
+    type: 'string',
+    fieldset: 'homeLabels',
+    placeholder,
+    description,
+    validation: (Rule) => Rule.max(40),
+  })
+
 export default defineType({
   name: 'page',
   title: 'Page',
   type: 'document',
+  fieldsets: [
+    {
+      name: 'homeLabels',
+      title: 'Buttons and labels',
+      description: 'Leave any of these empty to use the default shown in grey.',
+      options: {collapsible: true, collapsed: false},
+      hidden: ({document}) => document?.slug?.current !== 'home',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -119,6 +140,11 @@ export default defineType({
             : true,
         ),
     }),
+    labelField('blogButtonLabel', 'Blog button', 'Good Thoughts', 'The main button under the intro. Opens the blog. (Once Selected Work has projects, the work button takes its place.)'),
+    labelField('workButtonLabel', 'Work button', 'See my work', 'The main button under the intro once Selected Work has projects.'),
+    labelField('aboutButtonLabel', 'About button', 'Who am I?', 'The second button under the intro. Opens About.'),
+    labelField('workHeading', 'Selected Work heading', 'Selected Work', 'Heading over your projects (once there are some).'),
+    labelField('blogLinkLabel', 'Blog link', 'See the blog', 'Link beside the featured entries heading. An arrow is added after it.'),
     defineField({
       name: 'metaDescription',
       title: 'Search Description',

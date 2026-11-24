@@ -49,15 +49,16 @@ function Home() {
             </div>
           )}
           {/* Two actions under the intro (Redesign Directions › Refresh). Until
-              there's work to show, the primary one points to her blog. */}
+              there's work to show, the primary one points to her blog. Labels
+              are editable in Studio (Home page › Buttons and labels). */}
           <div className="mt-space-9 flex flex-wrap gap-space-3">
             {projects.length > 0 ? (
-              <ButtonLink to={{ pathname: '/', hash: '#work' }}>See my work</ButtonLink>
+              <ButtonLink to={{ pathname: '/', hash: '#work' }}>{page?.workButtonLabel || 'See my work'}</ButtonLink>
             ) : (
-              <ButtonLink to="/blog">Good Thoughts</ButtonLink>
+              <ButtonLink to="/blog">{page?.blogButtonLabel || 'Good Thoughts'}</ButtonLink>
             )}
             <ButtonLink to="/about" variant="secondary">
-              Who am I?
+              {page?.aboutButtonLabel || 'Who am I?'}
             </ButtonLink>
           </div>
         </div>
@@ -65,7 +66,7 @@ function Home() {
 
       <FactsStrip facts={page?.facts} />
 
-      <SelectedWork projects={projects} />
+      <SelectedWork projects={projects} heading={page?.workHeading} />
 
       {page?.showFeaturedEntries && featuredEntries.length > 0 && (
         <section aria-labelledby="recent-heading" className="border-t border-border py-space-11">
@@ -75,7 +76,7 @@ function Home() {
                 {page.featuredEntriesHeading || 'Recent Things'}
               </h2>
               <Link to="/blog" className="py-3 text-type-ui text-accent hover:text-ink">
-                See the blog →
+                {page?.blogLinkLabel || 'See the blog'} →
               </Link>
             </div>
             <ul className="space-y-space-8">

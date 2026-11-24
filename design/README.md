@@ -107,7 +107,7 @@ Hand-drawn tooth outlines float in the background of the hero and the About open
 - **Buttons:** primary is an `accent` fill with `on-accent` text, 48px tall; secondary is a 1px `ink` outline. One primary button per view.
 - **Facts strip:** four label/value pairs on `surface`, between hairlines.
 - **Work card:** a 4:3 image with square corners, the title, then `Category · Year` in `meta`.
-- **Entry card:** full width, with a `lavender` quote panel and a `surface` text panel holding meta, title, excerpt and "Read entry →".
+- **Entry card:** full width, with a `lavender` quote panel and a `surface` text panel holding meta, title, excerpt and "Read more →".
 - **Let's Connect:** a `lavender` band that ends Home and About. "Contact" in the nav scrolls to it. It holds a heading, a line she can edit, a reply-time note, and a Name / Email / Message form.
 - **Footer:** the © line on the left; Instagram, LinkedIn and Threads on the right. This is the only place the social links appear.
 

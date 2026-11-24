@@ -8,7 +8,7 @@ import { ENTRY_TYPES } from '../../constants/entryTypes'
 /**
  * Entry card (brand book, Components › Entry card).
  * Full width: a lavender quote panel beside a surface text panel with meta,
- * title, excerpt and "Read entry →" in accent. Square corners.
+ * title, excerpt and "Read more →" in accent. Square corners.
  *
  * The quote panel holds what the entry is: a pull quote for statements (its
  * opening sentences; the next ones become the excerpt), the image for image
@@ -51,7 +51,7 @@ function EntryCard({ entry, headingLevel = 2 }) {
         )}
         {excerpt && <p className="mt-space-4 max-w-reading text-type-body text-body">{excerpt}</p>}
         <p className="mt-space-6 text-type-ui text-accent" aria-hidden="true">
-          Read entry →
+          Read more →
         </p>
       </div>
     </article>

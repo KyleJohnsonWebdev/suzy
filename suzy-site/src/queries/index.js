@@ -42,6 +42,12 @@ export const ENTRIES_QUERY = `
   }
 `
 
+/** The blog page: every entry plus its heading and intro from Site Settings */
+export const BLOG_PAGE_QUERY = `{
+  "entries": ${ENTRIES_QUERY},
+  "settings": *[_type == "siteSettings"][0]{ blogHeading, blogIntro }
+}`
+
 /** Featured entries for homepage, newest first */
 export const FEATURED_ENTRIES_QUERY = `
   *[_type == "entry" && featured == true && defined(publishedAt) && defined(slug.current)]
@@ -67,7 +73,12 @@ export const HOME_PAGE_QUERY = `
     showFeaturedEntries,
     featuredEntriesHeading,
     facts[]{ _key, label, value },
-    metaDescription
+    metaDescription,
+    blogButtonLabel,
+    workButtonLabel,
+    aboutButtonLabel,
+    workHeading,
+    blogLinkLabel
   }
 `
 
@@ -126,6 +137,7 @@ export const CONTACT_SETTINGS_QUERY = `
   *[_type == "siteSettings"][0]{
     contactFormHeading,
     contactFormDescription,
+    contactReplyNote,
     contactEmail,
     instagramHandle,
     instagramUrl,

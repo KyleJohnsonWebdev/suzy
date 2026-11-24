@@ -1,17 +1,17 @@
 import { urlForImage } from '../../utils/image'
 
 /**
- * Selected Work (fixed label) with work cards (brand book, Components › Work card):
+ * Selected Work (heading editable in Studio) with work cards (brand book, Components › Work card):
  * 4:3 image, square corners, title (work-title), then "Category · Year" in meta.
  * Renders nothing until Sanity has projects.
  */
-function SelectedWork({ projects }) {
+function SelectedWork({ projects, heading }) {
   if (!projects?.length) return null
   return (
     <section id="work" aria-labelledby="work-heading" className="border-t border-border py-space-11">
       <div className="container-page">
         <h2 id="work-heading" className="mb-space-8 text-type-heading-section text-ink">
-          Selected Work
+          {heading || 'Selected Work'}
         </h2>
         <ul className="grid gap-space-7 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (

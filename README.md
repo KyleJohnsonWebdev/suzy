@@ -1,6 +1,6 @@
 # maybespecial.com
 
-The website for Maybe Special, Suzy Johnson's design practice. It's a React site with content in Sanity, so she updates her own work, bio and entries without touching code.
+The website for maybespecial, Suzy Johnson's design practice. It's a React site with content in Sanity, so she updates her own work, bio and blog posts without touching code.
 
 - **Design guide:** [design/README.md](design/README.md) covers the design choices behind the November 2026 refresh: color, contrast, type, layout, the tooth doodles and the components.
 - **Quality, before and after:** [quality/after.md](quality/after.md) has the Lighthouse scores, accessibility results and SEO checks, measured before and after the refresh.

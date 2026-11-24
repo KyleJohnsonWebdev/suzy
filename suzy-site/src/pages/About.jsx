@@ -8,12 +8,11 @@ import ToothDoodles from '../components/brand/ToothDoodles'
 import { SidebarFacts } from '../components/brand/Facts'
 import LetsConnect from '../components/brand/LetsConnect'
 
-// Two teeth in the band right of the opener's text on wide screens; one in the
-// top padding below that, where the text runs the full width.
+// Two teeth in the band right of the opener's text on wide screens. None
+// below that: phones show the tooth beside the wordmark instead.
 const OPENER_DOODLES = [
   { className: 'hidden xl:block right-[3%] top-[16%] h-[96px]', duration: 21 },
   { className: 'hidden xl:block right-[11%] bottom-[16%] h-[72px]', duration: 24, delay: 4 },
-  { className: 'xl:hidden right-space-9 top-space-3 h-[72px]', still: true },
 ]
 
 function About() {

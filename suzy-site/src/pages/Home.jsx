@@ -11,13 +11,12 @@ import SelectedWork from '../components/brand/SelectedWork'
 import EntryCard from '../components/entries/EntryCard'
 import LetsConnect from '../components/brand/LetsConnect'
 
-// Three teeth in the band right of the headline on wide screens; one in the
-// top padding on phones, where there's no free band beside the text.
+// Three teeth in the band right of the headline on wide screens. None on
+// smaller screens: phones show the tooth beside the wordmark instead.
 const HERO_DOODLES = [
   { className: 'hidden lg:block right-[2%] top-[14%] h-[112px]', duration: 22 },
   { className: 'hidden lg:block right-[12%] top-[46%] h-[72px]', duration: 18, delay: 3 },
   { className: 'hidden lg:block right-[3%] bottom-[10%] h-[88px]', duration: 25, delay: 6 },
-  { className: 'lg:hidden right-space-9 top-space-3 h-[72px]', still: true },
 ]
 
 function Home() {
@@ -50,15 +49,15 @@ function Home() {
             </div>
           )}
           {/* Two actions under the intro (Redesign Directions › Refresh). Until
-              there's work to show, the primary one points to her entries. */}
+              there's work to show, the primary one points to her blog. */}
           <div className="mt-space-9 flex flex-wrap gap-space-3">
             {projects.length > 0 ? (
               <ButtonLink to={{ pathname: '/', hash: '#work' }}>See my work</ButtonLink>
             ) : (
-              <ButtonLink to="/entries">Read entries</ButtonLink>
+              <ButtonLink to="/entries">Good Thoughts</ButtonLink>
             )}
             <ButtonLink to="/about" variant="secondary">
-              More about me
+              Who am I?
             </ButtonLink>
           </div>
         </div>

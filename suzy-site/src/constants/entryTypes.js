@@ -6,4 +6,5 @@ export const ENTRY_TYPES = {
   IMAGE: 'image',
   VIDEO: 'video',
   STATEMENT: 'statement',
+  POST: 'post',
 }

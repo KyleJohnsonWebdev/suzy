@@ -17,6 +17,21 @@ export function getYouTubeThumbnail(url) {
     : null
 }
 
+const VIMEO_ID_REGEX = /vimeo\.com\/(?:video\/)?(\d+)/
+
+/**
+ * Returns a player URL for a YouTube or Vimeo link, or null for anything
+ * else (those show as a link card in posts instead).
+ */
+export function getVideoEmbedUrl(url) {
+  if (!url) return null
+  const yt = url.match(VIDEO_ID_REGEX)
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`
+  const vimeo = url.match(VIMEO_ID_REGEX)
+  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}`
+  return null
+}
+
 /**
  * Returns a YouTube embed URL for a given video URL.
  * Falls back to the original URL if not a recognisable YouTube URL.

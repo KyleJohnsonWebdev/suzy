@@ -4,7 +4,7 @@ import { urlForImage } from '../utils/image'
 import { extractPlainText, truncateAtWord } from '../utils/text'
 
 export const SITE_URL = 'https://maybespecial.com'
-const SITE_NAME = 'Maybe Special'
+const SITE_NAME = 'maybespecial'
 const DESCRIPTION_LIMIT = 154 // + "…" stays within the ~155–160 characters search results show
 
 /** Site-wide fallbacks (description and share image), provided by AppShell from Site Settings. */
@@ -22,8 +22,8 @@ export function describe(...parts) {
 }
 
 /**
- * Sets the page's <head> tags: title ("Page — Maybe Special"; home is
- * "Maybe Special — Suzy Johnson"), meta description, canonical URL, Open Graph
+ * Sets the page's <head> tags: title ("Page — maybespecial"; home is
+ * "maybespecial — Suzy Johnson"), meta description, canonical URL, Open Graph
  * and Twitter card tags. Existing tags are updated in place, so the tags in
  * prerendered HTML are reused, never duplicated.
  */

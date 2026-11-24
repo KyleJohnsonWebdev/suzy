@@ -5,6 +5,7 @@ import { ENTRY_TYPES } from '../constants/entryTypes'
 import ImageDetail from '../components/detail/ImageDetail'
 import VideoDetail from '../components/detail/VideoDetail'
 import StatementDetail from '../components/detail/StatementDetail'
+import PostDetail from '../components/detail/PostDetail'
 import LoadingScreen from '../components/shared/LoadingScreen'
 import ErrorScreen from '../components/shared/ErrorScreen'
 
@@ -12,15 +13,16 @@ const DETAIL_LAYOUTS = {
   [ENTRY_TYPES.IMAGE]: ImageDetail,
   [ENTRY_TYPES.VIDEO]: VideoDetail,
   [ENTRY_TYPES.STATEMENT]: StatementDetail,
+  [ENTRY_TYPES.POST]: PostDetail,
 }
 
 function EntryDetail() {
   const { slug } = useParams()
   const { entry, loading, error } = useEntry(slug)
   useSeo({
-    title: entry?.title || 'Entries',
-    description: describe(entry?.caption || entry?.body),
-    image: entry?.image,
+    title: entry?.title || 'Blog',
+    description: describe(entry?.caption || entry?.body || entry?.postBody),
+    image: entry?.image || entry?.postBody?.find((b) => b._type === 'image'),
     type: 'article',
   })
 

@@ -4,6 +4,9 @@
 // by star export entries" when a file mixes named exports with a
 // default export that points to the same function.
 
+import { urlForImage } from '../../utils/image'
+import { getVideoEmbedUrl } from '../../utils/youtube'
+
 function renderMark(mark, children, markDefs = []) {
   switch (mark) {
     case 'strong':
@@ -94,6 +97,118 @@ export function PortableTextWithDropCap({ value }) {
       {restBlocks.map((block, index) => {
         if (block._type === 'block') return renderBlock(block, index + 1)
         return null
+      })}
+    </div>
+  )
+}
+
+// ─── Posts: long-form text with lists, photos and embeds ──────────────────────
+
+// Consecutive list items share one <ul>/<ol>; Portable Text stores them flat.
+function groupLists(blocks) {
+  const out = []
+  for (const block of blocks) {
+    const last = out[out.length - 1]
+    if (block._type === 'block' && block.listItem) {
+      if (last?._type === 'list' && last.listItem === block.listItem) last.items.push(block)
+      else out.push({ _type: 'list', _key: `list-${block._key}`, listItem: block.listItem, items: [block] })
+    } else {
+      out.push(block)
+    }
+  }
+  return out
+}
+
+function PostImage({ value }) {
+  const src = urlForImage(value, { width: 1400 })
+  if (!src) return null
+  return (
+    <figure className="my-space-9">
+      <img
+        src={src}
+        srcSet={[700, 1050, 1400].map((w) => `${urlForImage(value, { width: w })} ${w}w`).join(', ')}
+        sizes="(min-width: 768px) 672px, 100vw"
+        alt={value.alt || ''}
+        loading="lazy"
+        className="w-full"
+      />
+      {value.caption && <figcaption className="mt-space-3 text-type-meta text-muted">{value.caption}</figcaption>}
+    </figure>
+  )
+}
+
+function PostEmbed({ value }) {
+  if (!value?.url) return null
+  const player = getVideoEmbedUrl(value.url)
+  return (
+    <figure className="my-space-9">
+      {player ? (
+        <div className="aspect-video w-full overflow-hidden bg-lavender">
+          <iframe
+            src={player}
+            title={value.title || 'Embedded video'}
+            className="h-full w-full"
+            loading="lazy"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      ) : (
+        <a
+          href={value.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block border border-border bg-lavender p-space-6 transition-colors hover:text-accent"
+        >
+          <span className="block text-type-ui text-ink">{value.title || value.url}</span>
+          <span className="mt-space-1 block break-all text-type-meta text-muted">{hostOf(value.url)} ↗</span>
+        </a>
+      )}
+      {value.caption && <figcaption className="mt-space-3 text-type-meta text-muted">{value.caption}</figcaption>}
+    </figure>
+  )
+}
+
+function hostOf(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
+const POST_PARAGRAPH = 'mb-space-6 text-type-body text-body'
+
+export function PostBody({ value }) {
+  if (!Array.isArray(value) || value.length === 0) return null
+  return (
+    <div className="prose-custom">
+      {groupLists(value).map((node, index) => {
+        const key = node._key || index
+        switch (node._type) {
+          case 'block':
+            return renderBlock({ ...node, _key: key }, key, POST_PARAGRAPH)
+          case 'list': {
+            const List = node.listItem === 'number' ? 'ol' : 'ul'
+            return (
+              <List key={key} className={`mb-space-6 space-y-space-2 pl-space-6 text-type-body text-body ${List === 'ol' ? 'list-decimal' : 'list-disc'}`}>
+                {node.items.map((item, i) => (
+                  <li key={item._key || i}>
+                    {(item.children || []).map((child, j) => (
+                      <span key={j}>{renderSpan(child, item.markDefs)}</span>
+                    ))}
+                  </li>
+                ))}
+              </List>
+            )
+          }
+          case 'image':
+            return <PostImage key={key} value={node} />
+          case 'embed':
+            return <PostEmbed key={key} value={node} />
+          default:
+            return null
+        }
       })}
     </div>
   )
